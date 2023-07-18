@@ -65,19 +65,31 @@ impl<'d, T: FromStr> Deserialize<'d> for CsvOption<T> {
     }
 }
 
-pub fn parse_tsv_no_header<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
+pub fn parse_tsv_<T: for<'de> serde::Deserialize<'de>>(input: impl Read, header: bool) -> Result<Vec<T>> {
     let mut readerbuilder = csv::ReaderBuilder::new();
     readerbuilder.delimiter(b'\t');
     readerbuilder.has_headers(false);
     let mut reader = readerbuilder.from_reader(input);
     let mut records : Vec<T> = Vec::new();
-    let iter = reader.deserialize().into_iter();
+    let mut iter = reader.deserialize().into_iter();
+    if header {
+        iter.next();
+    }
     for rowresult in iter {
         let rowresult = rowresult?;
         let record : T = rowresult;
         records.push(record);
     }
     Ok(records)
+}
+
+#[allow(dead_code)]
+pub fn parse_tsv_noheader<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
+    parse_tsv_(input, false)
+}
+
+pub fn parse_tsv<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
+    parse_tsv_(input, true)
 }
 
 pub fn optionfmt<T: Display>(v: Option<T>) -> String {

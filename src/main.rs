@@ -8,6 +8,7 @@ use crate::easycsv::{CsvOption, optionfmt};
 
 // Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
 const RECENT_TABLES_TSV : &'static str = "
+Capital de notificação	Ign/Branco	Analfabeto	1ª a 4ª série incompleta do EF	4ª série completa do EF	5ª a 8ª série incompleta do EF	Ensino fundamental completo	Ensino médio incompleto	Ensino médio completo	Educação superior incompleta	Educação superior completa	Não se aplica
 355030 São Paulo	1042	18	134	93	297	197	104	148	21	26	14
 120040 Rio Branco	195	69	367	122	398	79	226	317	49	36	52
 261160 Recife	691	29	106	37	207	36	52	65	6	4	35
@@ -69,7 +70,7 @@ impl RecentEntry {
 
 
 fn main() -> Result<()> {
-    let records = easycsv::parse_tsv_no_header::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
+    let records = easycsv::parse_tsv::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
     println!("{records:?}");
 
     for record in records {
