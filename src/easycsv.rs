@@ -13,6 +13,14 @@ impl<T> Deref for CsvOption<T> {
     }
 }
 
+// ever useless (implicit conversion this not is; and have to give
+// type, stupid). use deref instead.
+impl<T> From<CsvOption<T>> for Option<T> {
+    fn from(v: CsvOption<T>) -> Self {
+        v.0
+    }
+}
+
 struct CSVOptionVisitor<T> {
     _marker: PhantomData<T>,
 }
