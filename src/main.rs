@@ -1,47 +1,62 @@
-use std::{ops::{Add, Sub, Div, Mul, Deref}, fmt::Display, cmp::Ordering, path::Path, io::Read, str::FromStr};
-use enum_map::{EnumMap, Enum, enum_map};
-use serde::{Deserialize, Serialize, Deserializer};
+use std::io::Read;
+use serde::{Deserialize, Deserializer, de::Visitor};
 use anyhow::Result;
 
+#[derive(Debug)]
+struct OptionU64(Option<u64>);
 
+struct OptionU64Visitor {}
 
-fn parse_tsv_with_headers<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<(Vec<String>, Vec<T>)> {
+impl<'v> Visitor<'v> for OptionU64Visitor {
+    type Value = OptionU64;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        formatter.write_str("wTF")
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: serde::de::Error,
+    {
+        // println!("OK got a str: {v}");
+        match u64::from_str_radix(v, 10) {
+            Ok(n) => Ok(OptionU64(Some(n))),
+            Err(_e) =>
+                if v == "-" {
+                    Ok(OptionU64(None))
+                } else {
+                    // Err(_e)
+                    Err(serde::de::Error::invalid_type(serde::de::Unexpected::Str(v), &self))
+                }
+        }
+    }
+}
+
+impl<'d> Deserialize<'d> for OptionU64 {
+    fn deserialize<D: Deserializer<'d>>(deserializer: D) -> Result<Self, D::Error>
+    {
+        println!("deserialize");
+        deserializer.deserialize_str(OptionU64Visitor {})
+    }
+}
+
+fn parse_tsv_without_headers<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
     let mut readerbuilder = csv::ReaderBuilder::new();
     readerbuilder.delimiter(b'\t');
     readerbuilder.has_headers(false);
     let mut reader = readerbuilder.from_reader(input);
-    let header: Vec<String> = Vec::new();
     let mut records : Vec<T> = Vec::new();
     let mut iter = reader.deserialize().into_iter();
-    iter.next();
-    // let header_row = iter.next().unwrap()?; // XXX
-    // header_row
     for rowresult in iter {
         let rowresult = rowresult?;
         let record : T = rowresult;
         records.push(record);
     }
-    Ok((header, records))
+    Ok(records)
 }
 
-
-fn deserialize_option<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
-where
-    D: Deserializer<'de>,
-    T: FromStr, <T as FromStr>::Err: std::fmt::Display
-{
-    let value: Option<String> = Option::deserialize(deserializer)?;
-    match value {
-        Some(inner_value) => Ok(Some(inner_value.parse().map_err(serde::de::Error::custom)?)),
-        None => Ok(None),
-    }
-}
-
-
-// Capital de notificação	Ign/Branco	Analfabeto	1ª a 4ª série incompleta do EF	4ª série completa do EF	5ª a 8ª série incompleta do EF	Ensino fundamental completo	Ensino médio incompleto	Ensino médio completo	Educação superior incompleta	Educação superior completa	Não se aplica
-// Notification capital Ign/White Illiterate 1st to 4th incomplete grade of FS 4th complete grade of FS 5th to 8th incomplete grade of FS Complete elementary school Incomplete high school Complete higher education Incomplete higher education Complete higher education Does not apply
+// Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
 const RECENT_TABLES_TSV : &'static str = "
-Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
 355030 São Paulo	1042	18	134	93	297	197	104	148	21	26	14
 120040 Rio Branco	195	69	367	122	398	79	226	317	49	36	52
 261160 Recife	691	29	106	37	207	36	52	65	6	4	35
@@ -71,33 +86,24 @@ Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th 
 510340 Cuiabá	-	-	-	2	-	2	1	1	-	-	-
 ";
 
-// Notification capital : 
-
 #[derive(Debug, Deserialize)]
 struct RecentEntry {
     capital: String,
-    #[serde(deserialize_with = "deserialize_option")]
-    ign_per_white: Option<u64>,
-    illiterate: Option<u64>,
-    _1st_to_4th_incomplete_grade_of_fs: Option<u64>,
-    _4th_complete_grade_of_fs: Option<u64>,
-    _5th_to_8th_incomplete_grade_of_fs: Option<u64>,
-    complete_elementary_school: Option<u64>,
-    #[serde(deserialize_with = "deserialize_option")]
-    incomplete_medium_education: Option<u64>,
-    #[serde(deserialize_with = "deserialize_option")]
-    complete_medium_education: Option<u64>,
-    #[serde(deserialize_with = "deserialize_option")]
-    incomplete_higher_education: Option<u64>,
-    complete_higher_education: Option<u64>,
-    does_not_apply: Option<u64>,
+    ign_per_white: OptionU64,
+    illiterate: OptionU64,
+    _1st_to_4th_incomplete_grade_of_fs: OptionU64,
+    _4th_complete_grade_of_fs: OptionU64,
+    _5th_to_8th_incomplete_grade_of_fs: OptionU64,
+    complete_elementary_school: OptionU64,
+    incomplete_medium_education: OptionU64,
+    complete_medium_education: OptionU64,
+    incomplete_higher_education: OptionU64,
+    complete_higher_education: OptionU64,
+    does_not_apply: OptionU64,
 }
 
-
 fn main() -> Result<()> {
-    let (header, records) = parse_tsv_with_headers::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
-    println!("{header:?}");
+    let records = parse_tsv_without_headers::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
     println!("{records:?}");
     Ok(())
 }
-
