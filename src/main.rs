@@ -1,4 +1,4 @@
-use std::{io::Read, marker::PhantomData, str::FromStr, ops::Deref, any::type_name};
+use std::{io::Read, marker::PhantomData, str::FromStr, ops::Deref, fmt::Display, any::type_name};
 use serde::{Deserialize, Deserializer, de::Visitor};
 use anyhow::Result;
 
@@ -52,18 +52,18 @@ impl<'v, T: FromStr> Visitor<'v> for CSVOptionVisitor<T>
 impl<'d, T: FromStr> Deserialize<'d> for CsvOption<T> {
     fn deserialize<D: Deserializer<'d>>(deserializer: D) -> Result<Self, D::Error>
     {
-        println!("deserialize");
+        // println!("deserialize");
         deserializer.deserialize_str(CSVOptionVisitor::new())
     }
 }
 
-fn parse_tsv_without_headers<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
+fn parse_tsv_no_header<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
     let mut readerbuilder = csv::ReaderBuilder::new();
     readerbuilder.delimiter(b'\t');
     readerbuilder.has_headers(false);
     let mut reader = readerbuilder.from_reader(input);
     let mut records : Vec<T> = Vec::new();
-    let mut iter = reader.deserialize().into_iter();
+    let iter = reader.deserialize().into_iter();
     for rowresult in iter {
         let rowresult = rowresult?;
         let record : T = rowresult;
@@ -105,7 +105,7 @@ const RECENT_TABLES_TSV : &'static str = "
 
 #[derive(Debug, Deserialize)]
 struct RecentEntry {
-    capital: String,
+    coordinates_capital: String,
     ign_per_white: CsvOption<u64>,
     illiterate: CsvOption<u64>,
     _1st_to_4th_incomplete_grade_of_fs: CsvOption<u64>,
@@ -119,16 +119,38 @@ struct RecentEntry {
     does_not_apply: CsvOption<u64>,
 }
 
+impl RecentEntry {
+    fn capital(&self) -> &str {
+        let s : &str = &self.coordinates_capital;
+        if let Some((coord, cap)) = s.split_once(' ') {
+            if let Err(e) = u64::from_str(coord) {
+                panic!("expected coordinates in {s:?}, but: {e}")
+            }
+            cap
+        } else {
+            panic!("expecting coordinates_capital field to have a space")
+        }
+    }
+}
+
+fn optionfmt<T: Display>(v: Option<T>) -> String {
+    if let Some(v) = v {
+        format!("{v}")
+    } else {
+        String::from("-")
+    }
+}
+
+
 fn main() -> Result<()> {
-    let records = parse_tsv_without_headers::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
+    let records = parse_tsv_no_header::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
     println!("{records:?}");
 
     for record in records {
-        if let Some(ed) = *record.incomplete_medium_education {
-            println!("ed = {ed}");
-        } else {
-            println!("ed = -");
-        }
+        let cap = record.capital();
+        let ill = optionfmt(*record.illiterate);
+        let ed = optionfmt(*record.incomplete_medium_education);
+        println!("{cap} {ill} {ed}");
     }
     
     Ok(())
