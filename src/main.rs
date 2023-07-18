@@ -1,76 +1,10 @@
-use std::{io::Read, marker::PhantomData, str::FromStr, ops::Deref, fmt::Display, any::type_name};
-use serde::{Deserialize, Deserializer, de::Visitor};
+mod easycsv;
+
+use std::str::FromStr;
+use serde::Deserialize;
 use anyhow::Result;
+use crate::easycsv::{CsvOption, optionfmt};
 
-#[derive(Debug)]
-struct CsvOption<T>(Option<T>);
-
-impl<T> Deref for CsvOption<T> {
-    type Target = Option<T>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-struct CSVOptionVisitor<T> {
-    _marker: PhantomData<T>,
-}
-impl<T> CSVOptionVisitor<T> {
-    fn new() -> CSVOptionVisitor<T> {
-        CSVOptionVisitor { _marker: PhantomData::default() }
-    }
-}
-
-impl<'v, T: FromStr> Visitor<'v> for CSVOptionVisitor<T>
-{
-    type Value = CsvOption<T>;
-
-    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        formatter.write_str("a ")?;
-        formatter.write_str(type_name::<T>())
-    }
-
-    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
-    where
-        E: serde::de::Error,
-    {
-        // println!("OK got a str: {v}");
-        match T::from_str(v) {
-            Ok(n) => Ok(CsvOption(Some(n))),
-            Err(_e) =>
-                if v == "-" {
-                    Ok(CsvOption(None))
-                } else {
-                    // Err(_e)
-                    Err(serde::de::Error::invalid_type(serde::de::Unexpected::Str(v), &self))
-                }
-        }
-    }
-}
-
-impl<'d, T: FromStr> Deserialize<'d> for CsvOption<T> {
-    fn deserialize<D: Deserializer<'d>>(deserializer: D) -> Result<Self, D::Error>
-    {
-        // println!("deserialize");
-        deserializer.deserialize_str(CSVOptionVisitor::new())
-    }
-}
-
-fn parse_tsv_no_header<T: for<'de> serde::Deserialize<'de>>(input: impl Read) -> Result<Vec<T>> {
-    let mut readerbuilder = csv::ReaderBuilder::new();
-    readerbuilder.delimiter(b'\t');
-    readerbuilder.has_headers(false);
-    let mut reader = readerbuilder.from_reader(input);
-    let mut records : Vec<T> = Vec::new();
-    let iter = reader.deserialize().into_iter();
-    for rowresult in iter {
-        let rowresult = rowresult?;
-        let record : T = rowresult;
-        records.push(record);
-    }
-    Ok(records)
-}
 
 // Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
 const RECENT_TABLES_TSV : &'static str = "
@@ -133,17 +67,9 @@ impl RecentEntry {
     }
 }
 
-fn optionfmt<T: Display>(v: Option<T>) -> String {
-    if let Some(v) = v {
-        format!("{v}")
-    } else {
-        String::from("-")
-    }
-}
-
 
 fn main() -> Result<()> {
-    let records = parse_tsv_no_header::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
+    let records = easycsv::parse_tsv_no_header::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
     println!("{records:?}");
 
     for record in records {
