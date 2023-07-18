@@ -1,6 +1,6 @@
-use std::{ops::{Add, Sub, Div, Mul, Deref}, fmt::Display, cmp::Ordering, path::Path, io::Read};
+use std::{ops::{Add, Sub, Div, Mul, Deref}, fmt::Display, cmp::Ordering, path::Path, io::Read, str::FromStr};
 use enum_map::{EnumMap, Enum, enum_map};
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 use anyhow::Result;
 
 
@@ -10,17 +10,32 @@ fn parse_tsv_with_headers<T: for<'de> serde::Deserialize<'de>>(input: impl Read)
     readerbuilder.delimiter(b'\t');
     readerbuilder.has_headers(false);
     let mut reader = readerbuilder.from_reader(input);
-    let mut header: Vec<String> = Vec::new();
+    let header: Vec<String> = Vec::new();
     let mut records : Vec<T> = Vec::new();
     let mut iter = reader.deserialize().into_iter();
     iter.next();
+    // let header_row = iter.next().unwrap()?; // XXX
+    // header_row
     for rowresult in iter {
-        let record : T = rowresult?;
+        let rowresult = rowresult?;
+        let record : T = rowresult;
         records.push(record);
     }
     Ok((header, records))
 }
 
+
+fn deserialize_option<'de, T, D>(deserializer: D) -> Result<Option<T>, D::Error>
+where
+    D: Deserializer<'de>,
+    T: FromStr, <T as FromStr>::Err: std::fmt::Display
+{
+    let value: Option<String> = Option::deserialize(deserializer)?;
+    match value {
+        Some(inner_value) => Ok(Some(inner_value.parse().map_err(serde::de::Error::custom)?)),
+        None => Ok(None),
+    }
+}
 
 
 // Capital de notificação	Ign/Branco	Analfabeto	1ª a 4ª série incompleta do EF	4ª série completa do EF	5ª a 8ª série incompleta do EF	Ensino fundamental completo	Ensino médio incompleto	Ensino médio completo	Educação superior incompleta	Educação superior completa	Não se aplica
@@ -56,20 +71,26 @@ Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th 
 510340 Cuiabá	-	-	-	2	-	2	1	1	-	-	-
 ";
 
+// Notification capital : 
+
 #[derive(Debug, Deserialize)]
 struct RecentEntry {
     capital: String,
-    ign_per_white: u64,
-    illiterate: u64,
-    _1st_to_4th_incomplete_grade_of_fs: u64,
-    _4th_complete_grade_of_fs: u64,
-    _5th_to_8th_incomplete_grade_of_fs: u64,
-    complete_elementary_school: u64,
-    incomplete_medium_education: u64,
-    complete_medium_education: u64,
-    incomplete_higher_education: u64,
-    complete_higher_education: u64,
-    does_not_apply: u64,
+    #[serde(deserialize_with = "deserialize_option")]
+    ign_per_white: Option<u64>,
+    illiterate: Option<u64>,
+    _1st_to_4th_incomplete_grade_of_fs: Option<u64>,
+    _4th_complete_grade_of_fs: Option<u64>,
+    _5th_to_8th_incomplete_grade_of_fs: Option<u64>,
+    complete_elementary_school: Option<u64>,
+    #[serde(deserialize_with = "deserialize_option")]
+    incomplete_medium_education: Option<u64>,
+    #[serde(deserialize_with = "deserialize_option")]
+    complete_medium_education: Option<u64>,
+    #[serde(deserialize_with = "deserialize_option")]
+    incomplete_higher_education: Option<u64>,
+    complete_higher_education: Option<u64>,
+    does_not_apply: Option<u64>,
 }
 
 
