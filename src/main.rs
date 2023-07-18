@@ -27,7 +27,7 @@ fn parse_tsv_with_headers<T: for<'de> serde::Deserialize<'de>>(input: impl Read)
 // Notification capital Ign/White Illiterate 1st to 4th incomplete grade of FS 4th complete grade of FS 5th to 8th incomplete grade of FS Complete elementary school Incomplete high school Complete higher education Incomplete higher education Complete higher education Does not apply
 const RECENT_TABLES_TSV : &'static str = "
 Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
-355030 São Paulo	1,042	18	134	93	297	197	104	148	21	26	14
+355030 São Paulo	1042	18	134	93	297	197	104	148	21	26	14
 120040 Rio Branco	195	69	367	122	398	79	226	317	49	36	52
 261160 Recife	691	29	106	37	207	36	52	65	6	4	35
 410690 Curitiba	557	10	83	48	149	55	75	84	8	23	11
