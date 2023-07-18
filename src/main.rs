@@ -1,17 +1,27 @@
-use std::io::Read;
+use std::{io::Read, marker::PhantomData, str::FromStr, any::type_name};
 use serde::{Deserialize, Deserializer, de::Visitor};
 use anyhow::Result;
 
 #[derive(Debug)]
-struct OptionU64(Option<u64>);
+struct CsvOption<T>(Option<T>);
 
-struct OptionU64Visitor {}
+struct CSVOptionVisitor<T> {
+    _marker: PhantomData<T>,
+}
+impl<T> CSVOptionVisitor<T> {
+    fn new() -> CSVOptionVisitor<T> {
+        CSVOptionVisitor { _marker: PhantomData::default() }
+    }
+}
 
-impl<'v> Visitor<'v> for OptionU64Visitor {
-    type Value = OptionU64;
+
+impl<'v, T: FromStr> Visitor<'v> for CSVOptionVisitor<T>
+{
+    type Value = CsvOption<T>;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        formatter.write_str("wTF")
+        formatter.write_str("a ")?;
+        formatter.write_str(type_name::<T>())
     }
 
     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
@@ -19,11 +29,11 @@ impl<'v> Visitor<'v> for OptionU64Visitor {
         E: serde::de::Error,
     {
         // println!("OK got a str: {v}");
-        match u64::from_str_radix(v, 10) {
-            Ok(n) => Ok(OptionU64(Some(n))),
+        match T::from_str(v) {
+            Ok(n) => Ok(CsvOption(Some(n))),
             Err(_e) =>
                 if v == "-" {
-                    Ok(OptionU64(None))
+                    Ok(CsvOption(None))
                 } else {
                     // Err(_e)
                     Err(serde::de::Error::invalid_type(serde::de::Unexpected::Str(v), &self))
@@ -32,11 +42,11 @@ impl<'v> Visitor<'v> for OptionU64Visitor {
     }
 }
 
-impl<'d> Deserialize<'d> for OptionU64 {
+impl<'d, T: FromStr> Deserialize<'d> for CsvOption<T> {
     fn deserialize<D: Deserializer<'d>>(deserializer: D) -> Result<Self, D::Error>
     {
         println!("deserialize");
-        deserializer.deserialize_str(OptionU64Visitor {})
+        deserializer.deserialize_str(CSVOptionVisitor::new())
     }
 }
 
@@ -89,17 +99,17 @@ const RECENT_TABLES_TSV : &'static str = "
 #[derive(Debug, Deserialize)]
 struct RecentEntry {
     capital: String,
-    ign_per_white: OptionU64,
-    illiterate: OptionU64,
-    _1st_to_4th_incomplete_grade_of_fs: OptionU64,
-    _4th_complete_grade_of_fs: OptionU64,
-    _5th_to_8th_incomplete_grade_of_fs: OptionU64,
-    complete_elementary_school: OptionU64,
-    incomplete_medium_education: OptionU64,
-    complete_medium_education: OptionU64,
-    incomplete_higher_education: OptionU64,
-    complete_higher_education: OptionU64,
-    does_not_apply: OptionU64,
+    ign_per_white: CsvOption<u64>,
+    illiterate: CsvOption<u64>,
+    _1st_to_4th_incomplete_grade_of_fs: CsvOption<u64>,
+    _4th_complete_grade_of_fs: CsvOption<u64>,
+    _5th_to_8th_incomplete_grade_of_fs: CsvOption<u64>,
+    complete_elementary_school: CsvOption<u64>,
+    incomplete_medium_education: CsvOption<u64>,
+    complete_medium_education: CsvOption<u64>,
+    incomplete_higher_education: CsvOption<u64>,
+    complete_higher_education: CsvOption<u64>,
+    does_not_apply: CsvOption<u64>,
 }
 
 fn main() -> Result<()> {
