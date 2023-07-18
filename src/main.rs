@@ -2,7 +2,7 @@ mod easycsv;
 
 use std::str::FromStr;
 use serde::Deserialize;
-use anyhow::Result;
+use anyhow::{Result, bail};
 use crate::easycsv::{CsvOption, optionfmt};
 
 
@@ -54,15 +54,15 @@ struct RecentEntry {
 }
 
 impl RecentEntry {
-    fn capital(&self) -> &str {
+    fn capital(&self) -> Result<&str> {
         let s : &str = &self.coordinates_capital;
         if let Some((coord, cap)) = s.split_once(' ') {
             if let Err(e) = u64::from_str(coord) {
-                panic!("expected coordinates in {s:?}, but: {e}")
+                bail!("expected coordinates in {s:?}, but: {e}")
             }
-            cap
+            Ok(cap)
         } else {
-            panic!("expecting coordinates_capital field to have a space")
+            bail!("expecting coordinates_capital field to have a space")
         }
     }
 }
@@ -73,7 +73,7 @@ fn main() -> Result<()> {
     println!("{records:?}");
 
     for record in records {
-        let cap = record.capital();
+        let cap = record.capital()?;
         let ill = optionfmt(*record.illiterate);
         let ed = optionfmt(*record.incomplete_medium_education);
         println!("{cap} {ill} {ed}");
