@@ -1,9 +1,17 @@
-use std::{io::Read, marker::PhantomData, str::FromStr, any::type_name};
+use std::{io::Read, marker::PhantomData, str::FromStr, ops::Deref, any::type_name};
 use serde::{Deserialize, Deserializer, de::Visitor};
 use anyhow::Result;
 
 #[derive(Debug)]
 struct CsvOption<T>(Option<T>);
+
+impl<T> Deref for CsvOption<T> {
+    type Target = Option<T>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
 
 struct CSVOptionVisitor<T> {
     _marker: PhantomData<T>,
@@ -13,7 +21,6 @@ impl<T> CSVOptionVisitor<T> {
         CSVOptionVisitor { _marker: PhantomData::default() }
     }
 }
-
 
 impl<'v, T: FromStr> Visitor<'v> for CSVOptionVisitor<T>
 {
@@ -115,5 +122,14 @@ struct RecentEntry {
 fn main() -> Result<()> {
     let records = parse_tsv_without_headers::<RecentEntry>(RECENT_TABLES_TSV.as_bytes())?;
     println!("{records:?}");
+
+    for record in records {
+        if let Some(ed) = *record.incomplete_medium_education {
+            println!("ed = {ed}");
+        } else {
+            println!("ed = -");
+        }
+    }
+    
     Ok(())
 }
