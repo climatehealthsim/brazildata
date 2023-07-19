@@ -10,7 +10,7 @@ pub struct RecentRecord6 {
     pub urbana: CsvOption<u64>,
     pub rural: CsvOption<u64>,
     pub periurbana: CsvOption<u64>,
-    pub total: u64, // XXX What is this? It does not match the sum of the previous 4 columns!
+    pub total: u64, // This is the sum of all fields of all records below this one and this one, or so (the top matches, the beginning doesn't; aha, it appears that rows were sorted at some point.)
 }
 
 impl RecentRecord6 {
