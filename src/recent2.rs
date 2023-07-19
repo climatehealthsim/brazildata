@@ -29,10 +29,10 @@ impl RecentRecord2 {
 }
 
 const TSV : &'static str = "Capitais	Ign/branco	cura 	óbito
-355030 São Paulo	342	2,021	419
-120040 Rio Branco	35	2,315	38
-261160 Recife	139	1,381	175
-410690 Curitiba	56	1,128	197
+355030 São Paulo	342	2021	419
+120040 Rio Branco	35	2315	38
+261160 Recife	139	1381	175
+410690 Curitiba	56	1128	197
 150140 Belém	457	632	125
 292740 Salvador	75	794	132
 330455 Rio de Janeiro	94	514	154
