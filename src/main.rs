@@ -45,8 +45,8 @@ impl RecentRecord1 {
 }
 
 const RECENT_TABLES_1_TSV : &'static str = "capital de Notificaçao 	Ign/branco	domiciliar	trabalho	lazer	outro	total
-São Paulo	697	1,427	393	126	59	705
-Rio Branco	379	1,737	224	22	27	479
+São Paulo	697	1427	393	126	59	705
+Rio Branco	379	1737	224	22	27	479
 Recife	973	464	167	39	66	434
 Curitiba	325	572	238	179	76	287
 Belém	364	325	115	10	19	253
