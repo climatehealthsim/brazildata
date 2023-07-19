@@ -11,17 +11,17 @@ use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8};
 
 fn main() -> Result<()> {
 
-    {
-        let tbl = RecentTable1::get();
-        dbg!(tbl)?;
+    if false {
+        let tbl = RecentTable1::get()?;
+        dbg!(tbl);
     }
         
     {
-        let tbl = RecentTable2::get();
-        dbg!(tbl)?;
+        let tbl = RecentTable2::get()?;
+        dbg!(tbl);
     }
         
-    {
+    if false {
         let rt8 = RecentTable8::get()?;
         let records = &rt8.records;
         println!("{records:?}");
