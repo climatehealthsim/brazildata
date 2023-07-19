@@ -34,7 +34,7 @@ impl CapitalDeNotificacao for RecentRecord4 {
 // Excluídos casos não residentes no Brasil
 // Períodos Disponíveis ou período - Correspondem aos anos de notificação dos casos.
 const TSV: &'static str = "Capital de notificação	Em branco/IGN	<1 Ano	01 a 04	05 a 09	09 a 14	15-19	20-39	40-59	60-64	65-69	70-79	80 e +
-São Paulo	-	8	5	40	122	230	1,147	988	119	69	58	12
+São Paulo	-	8	5	40	122	230	1147	988	119	69	58	12
 Rio Branco	1	6	38	149	291	296	992	479	55	39	34	9
 Recife	-	22	12	88	173	207	719	395	37	25	20	4
 Curitiba	-	7	3	36	127	149	541	405	41	37	35	9
