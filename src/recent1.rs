@@ -2,22 +2,23 @@ use anyhow::{Result, bail};
 use serde::Deserialize;
 
 use crate::easycsv;
+use crate::util::{CapitalDeNotificacao, RecentTable};
 
 
 #[derive(Debug, Deserialize)]
 #[allow(dead_code)]
 pub struct RecentRecord1 {
     capital_de_notificacao: String,
-    ign_branco: u64,
-    domiciliar: u64,
-    trabalho: u64,
-    lazer: u64,
-    outro: u64,
-    total: u64,
+    pub ign_branco: u64,
+    pub domiciliar: u64,
+    pub trabalho: u64,
+    pub lazer: u64,
+    pub outro: u64,
+    pub total: u64,
 }
 
 impl RecentRecord1 {
-    fn get_column(&self, col: usize) -> u64 {
+    pub fn get_column(&self, col: usize) -> u64 {
         match col {
             1 => self.ign_branco,
             2 => self.domiciliar,
@@ -27,10 +28,6 @@ impl RecentRecord1 {
             6 => self.total,
             _ => panic!("invalid col number {col}")
         }
-    }
-    #[allow(dead_code)]
-    fn capital_de_notificacao(&self) -> &str {
-        &self.capital_de_notificacao
     }
     // fn total(&self) -> Result<u64> {
     //     let tot = self.ign_branco + self.domiciliar + self.trabalho + self.lazer + self.outro;
@@ -43,6 +40,12 @@ impl RecentRecord1 {
     fn check(&self) -> Result<()> {
         // self.total()?;
         Ok(())
+    }
+}
+
+impl CapitalDeNotificacao for RecentRecord1 {
+    fn capital_de_notificacao(&self) -> Result<&str> {
+        Ok(&self.capital_de_notificacao)
     }
 }
 
@@ -104,4 +107,6 @@ impl RecentTable1 {
     }
 }
 
-
+impl RecentTable<RecentRecord1> for RecentTable1 {
+    fn records(&self) -> &Vec<RecentRecord1> { &self.records }
+}

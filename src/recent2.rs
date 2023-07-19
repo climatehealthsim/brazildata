@@ -1,7 +1,7 @@
 use anyhow::{Result, bail};
 use serde::Deserialize;
 
-use crate::{easycsv, util::remove_coordinates};
+use crate::{easycsv, util::{remove_coordinates, CapitalDeNotificacao, RecentTable}};
 
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord2 {
@@ -15,10 +15,6 @@ impl RecentRecord2 {
     fn check(&self) -> Result<()> {
         Ok(())
     }
-    #[allow(dead_code)]
-    pub fn capital(&self) -> Result<&str> {
-        remove_coordinates(&self.coordinates_and_capitais)
-    }
     pub fn get_column(&self, col: usize) -> u64 {
         match col {
             1 => self.ign_branco,
@@ -28,6 +24,12 @@ impl RecentRecord2 {
         }
     }
 }
+
+impl CapitalDeNotificacao for RecentRecord2 {
+    fn capital_de_notificacao(&self) -> Result<&str> {
+        remove_coordinates(&self.coordinates_and_capitais)
+    }
+}    
 
 const TSV : &'static str = "Capitais	Ign/branco	cura 	óbito
 355030 São Paulo	342	2021	419
@@ -86,5 +88,8 @@ impl RecentTable2 {
         tabl.check()?;
         Ok(tabl)
     }
-    
+}
+
+impl RecentTable<RecentRecord2> for RecentTable2 {
+    fn records(&self) -> &Vec<RecentRecord2> { &self.records }
 }
