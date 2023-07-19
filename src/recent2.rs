@@ -1,7 +1,7 @@
 use anyhow::{Result, bail};
 use serde::Deserialize;
 
-use crate::{easycsv::{self, CsvOption}, util::remove_coordinates};
+use crate::{easycsv, util::remove_coordinates};
 
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord2 {
@@ -15,6 +15,7 @@ impl RecentRecord2 {
     fn check(&self) -> Result<()> {
         Ok(())
     }
+    #[allow(dead_code)]
     pub fn capital(&self) -> Result<&str> {
         remove_coordinates(&self.coordinates_and_capitais)
     }
