@@ -58,7 +58,7 @@ Natal	7	1	-	1	-	-	-
 João Pessoa	4	4	3	9	3	-	-
 Recife	205	12	36	102	47	8	24
 Maceió	10	21	27	65	22	1	-
-Aracajú	14	8	13	13	7	2	-
+Aracaju	14	8	13	13	7	2	-
 Salvador	140	3	15	51	11	5	7
 Belo Horizonte	39	-	2	2	5	1	1
 Vitória	17	2	6	19	5	1	3
