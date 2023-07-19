@@ -21,6 +21,14 @@ impl<T> From<CsvOption<T>> for Option<T> {
     }
 }
 
+// actually useful when having a & but need to return an option
+impl<T: Clone> From<&CsvOption<T>> for Option<T> {
+    fn from(v: &CsvOption<T>) -> Self {
+        v.0.clone()
+    }
+}
+
+
 struct CSVOptionVisitor<T> {
     _marker: PhantomData<T>,
 }
