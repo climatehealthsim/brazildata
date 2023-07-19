@@ -6,6 +6,7 @@ pub trait CapitalDeNotificacao {
 }
 
 pub trait RecentTable<R> {
+    fn name(&self) -> &str;
     fn records(&self) -> &Vec<R>;
 }
 
@@ -19,7 +20,8 @@ pub fn capitals_from_table<'t,
     for record in table.records() {
         let cap = record.capital_de_notificacao()?;
         if !set.insert(cap) {
-            bail!("duplicate key {cap:?}");
+            bail!("duplicate key {cap:?} in table {}",
+                  table.name());
         }
     }
     Ok(set)

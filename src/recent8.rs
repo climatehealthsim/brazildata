@@ -59,16 +59,21 @@ impl CapitalDeNotificacao for RecentRecord8 {
 }
 
 pub struct RecentTable8 {
-    pub records: Vec<RecentRecord8>
+    name: String,
+    records: Vec<RecentRecord8>
 }
 
 impl RecentTable8 {
     pub fn get() -> Result<RecentTable8> {
         let records = easycsv::parse_tsv::<RecentRecord8>(TSV.as_bytes())?;
-        Ok(RecentTable8 { records })
+        Ok(RecentTable8 {
+            name: String::from(file!()),
+            records
+        })
     }
 }
 
 impl RecentTable<RecentRecord8> for RecentTable8 {
+    fn name(&self) -> &str { &self.name }
     fn records(&self) -> &Vec<RecentRecord8> { &self.records }
 }

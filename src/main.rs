@@ -9,7 +9,7 @@ use anyhow::Result;
 use recent2::RecentTable2;
 use util::capitals_from_table;
 use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
-use crate::util::CapitalDeNotificacao;
+use crate::util::{CapitalDeNotificacao, RecentTable};
 
 
 fn main() -> Result<()> {
@@ -34,7 +34,7 @@ fn main() -> Result<()> {
     
     let rt8 = RecentTable8::get()?;
     if false {
-        let records = &rt8.records;
+        let records = rt8.records();
         println!("{records:?}");
 
         for record in records {
