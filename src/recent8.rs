@@ -1,7 +1,7 @@
 use anyhow::Result;
 use serde::Deserialize;
 
-use crate::{easycsv::{self, CsvOption}, util::remove_coordinates};
+use crate::{easycsv::{self, CsvOption}, util::{remove_coordinates, CapitalDeNotificacao, RecentTable}};
 
 
 // Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
@@ -52,10 +52,10 @@ pub struct RecentRecord8 {
     pub does_not_apply: CsvOption<u64>,
 }
 
-impl RecentRecord8 {
-    pub fn capital_de_notificacao(&self) -> Result<&str> {
+impl CapitalDeNotificacao for RecentRecord8 {
+    fn capital_de_notificacao(&self) -> Result<&str> {
         remove_coordinates(&self.coordinates_and_capital_de_notificacao)
-   }
+    }
 }
 
 pub struct RecentTable8 {
@@ -69,3 +69,6 @@ impl RecentTable8 {
     }
 }
 
+impl RecentTable<RecentRecord8> for RecentTable8 {
+    fn records(&self) -> &Vec<RecentRecord8> { &self.records }
+}
