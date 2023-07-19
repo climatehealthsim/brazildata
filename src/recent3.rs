@@ -31,10 +31,10 @@ impl RecentRecord3 {
 
 
 const TSV : &'static str = "Capitais	Masculino	Feminino
-355030 São Paulo	2,294	505
-120040 Rio Branco	1,400	936
-261160 Recife	1,233	359
-410690 Curitiba	1,125	265
+355030 São Paulo	2294	505
+120040 Rio Branco	1400	936
+261160 Recife	1233	359
+410690 Curitiba	1125	265
 150140 Belém	647	186
 292740 Salvador	841	166
 330455 Rio de Janeiro	632	132
