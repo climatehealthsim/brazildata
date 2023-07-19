@@ -17,7 +17,10 @@ pub fn capitals_from_table<'t,
 {
     let mut set = HashSet::new();
     for record in table.records() {
-        set.insert(record.capital_de_notificacao()?);
+        let cap = record.capital_de_notificacao()?;
+        if !set.insert(cap) {
+            bail!("duplicate key {cap:?}");
+        }
     }
     Ok(set)
 }
