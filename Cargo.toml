@@ -15,6 +15,10 @@ utf-8 = "^0.7.5"
 csv = "1.2.1"
 serde = { version = "1.0.154", features = ["derive"] }
 enum-map = "2.4.1"
+chrono = "^0.4"
+# 0.6's (indirect) dependency phf_codegen can't be handled with cargo 1.46.0
+# [Does not matter any more though]
+#chrono-tz = "0.5.3"
 
 [dev-dependencies]
 clap = { version = "^3.2.1", features = ["derive"] }
