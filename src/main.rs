@@ -13,7 +13,7 @@ use recent2::RecentRecord2;
 use recent3::RecentRecord3;
 use recent2::RecentTable2;
 use util::capitals_from_table;
-use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
+use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3, util::compare_sets};
 
 
 
@@ -37,9 +37,9 @@ fn main() -> Result<()> {
         dbg!(&rt3);
     }
     let c3 = capitals_from_table(&rt3)?;
-    dbg!(c3.difference(&c2));
-    dbg!(c2.difference(&c3));
-    dbg!(c3.difference(&c1));
+    dbg!(compare_sets(&c2, &c3));
+    dbg!(compare_sets(&c1, &c3));
+    dbg!(compare_sets(&c1, &c2));
     
     let rt8 = RecentTable8::get()?;
     if false {

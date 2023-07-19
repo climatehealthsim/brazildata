@@ -1,5 +1,5 @@
 use anyhow::{Result, bail};
-use std::{str::FromStr, collections::HashSet};
+use std::{str::FromStr, collections::HashSet, hash::Hash};
 
 pub trait CapitalDeNotificacao {
     fn capital_de_notificacao(&self) -> Result<&str>;
@@ -20,6 +20,14 @@ pub fn capitals_from_table<'t,
         set.insert(record.capital_de_notificacao()?);
     }
     Ok(set)
+}
+
+pub fn compare_sets<'t, T: Eq + Hash>(
+    s1: &'t HashSet<T>, s2: &'t HashSet<T>
+) -> (HashSet<&'t T>, HashSet<&'t T>)
+{
+    (s1.difference(&s2).collect(),
+     s2.difference(&s1).collect())
 }
 
 
