@@ -50,11 +50,11 @@ impl CapitalDeNotificacao for RecentRecord6 {
 // Dados de 2014 atualizados em 02/10/2015, sujeitos à revisão.
 // Dados de 2015 atualizados em 02/10/2015, sujeitos à revisão.
 const TSV: &'static str = "Capital de notificação	Ign/Branco	Urbana	Rural	Periurbana	
-355030 São Paulo	81	1,984	11	18	12,859
-120040 Rio Branco	38	1,559	271	42	2,094
-261160 Recife	61	1,173	26	8	1,910
-410690 Curitiba	23	1,054	18	8	1,268
-292740 Salvador	31	736	7	1	1,103
+355030 São Paulo	81	1984	11	18	12859
+120040 Rio Branco	38	1559	271	42	2094
+261160 Recife	61	1173	26	8	1910
+410690 Curitiba	23	1054	18	8	1268
+292740 Salvador	31	736	7	1	1103
 431490 Porto Alegre	24	550	27	18	775
 150140 Belém	8	551	19	2	619
 330455 Rio de Janeiro	24	546	2	5	580
