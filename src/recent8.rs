@@ -1,8 +1,7 @@
-use anyhow::{Result, bail};
+use anyhow::Result;
 use serde::Deserialize;
-use std::str::FromStr;
 
-use crate::easycsv::{self, CsvOption};
+use crate::{easycsv::{self, CsvOption}, util::remove_coordinates};
 
 
 // Notification capital	Ign/White	Illiterate	1st to 4th incomplete grade of FS	4th complete grade of FS	5th to 8th incomplete grade of FS	Complete elementary school	Incomplete high school	Complete higher education	Incomplete higher education	Complete higher education	Does not apply
@@ -39,7 +38,7 @@ const TSV : &'static str = "Capital de notificação	Ign/Branco	Analfabeto	1ª a
 #[derive(Debug, Deserialize)]
 #[allow(dead_code)]
 pub struct RecentRecord8 {
-    pub coordinates_and_capital_de_notificacao: String,
+    coordinates_and_capital_de_notificacao: String,
     pub ign_per_white: CsvOption<u64>,
     pub illiterate: CsvOption<u64>,
     pub _1st_to_4th_incomplete_grade_of_fs: CsvOption<u64>,
@@ -55,16 +54,8 @@ pub struct RecentRecord8 {
 
 impl RecentRecord8 {
     pub fn capital_de_notificacao(&self) -> Result<&str> {
-        let s : &str = &self.coordinates_and_capital_de_notificacao;
-        if let Some((coord, cap)) = s.split_once(' ') {
-            if let Err(e) = u64::from_str(coord) {
-                bail!("expected coordinates in {s:?}, but: {e}")
-            }
-            Ok(cap)
-        } else {
-            bail!("expecting coordinates_capital field to have a space")
-        }
-    }
+        remove_coordinates(&self.coordinates_and_capital_de_notificacao)
+   }
 }
 
 pub struct RecentTable8 {

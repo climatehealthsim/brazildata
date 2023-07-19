@@ -1,16 +1,24 @@
 mod easycsv;
 mod recent1;
+mod recent2;
 mod recent8;
+mod util;
 
 use anyhow::Result;
+use recent2::RecentTable2;
 use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8};
 
 
 fn main() -> Result<()> {
 
     {
-        let rt1 = RecentTable1::get();
-        dbg!(rt1)?;
+        let tbl = RecentTable1::get();
+        dbg!(tbl)?;
+    }
+        
+    {
+        let tbl = RecentTable2::get();
+        dbg!(tbl)?;
     }
         
     {

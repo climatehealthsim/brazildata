@@ -79,15 +79,10 @@ const TOTAL : &[Option<u64>] = &[None, Some(5273), Some(7272), Some(2347), Some(
 
 #[derive(Debug)]
 pub struct RecentTable1 {
-    records: Vec<RecentRecord1>,
+    pub records: Vec<RecentRecord1>,
 }
     
 impl RecentTable1 {
-    pub fn new(records: Vec<RecentRecord1>) -> Result<RecentTable1> {
-        let tabl = RecentTable1 { records };
-        tabl.check()?;
-        Ok(tabl)
-    }
     fn check(&self) -> Result<()> {
         let mut totals = [None, Some(0), Some(0), Some(0), Some(0), Some(0), Some(0)];
         for record in &self.records {
@@ -102,9 +97,10 @@ impl RecentTable1 {
         Ok(())
     }
     pub fn get() -> Result<RecentTable1> {
-        RecentTable1::new(
-            easycsv::parse_tsv::<RecentRecord1>(
-                TSV.as_bytes())?)
+        let records = easycsv::parse_tsv::<RecentRecord1>(TSV.as_bytes())?;
+        let tabl = RecentTable1 { records };
+        tabl.check()?;
+        Ok(tabl)
     }
 }
 
