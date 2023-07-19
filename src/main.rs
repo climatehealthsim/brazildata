@@ -4,6 +4,7 @@ mod recent2;
 mod recent3;
 mod recent4;
 mod recent5;
+mod recent6;
 mod recent8;
 mod util;
 
@@ -12,6 +13,7 @@ use recent2::RecentTable2;
 use util::capitals_from_table;
 use crate::recent4::RecentTable4;
 use crate::recent5::RecentTable5;
+use crate::recent6::RecentTable6;
 use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
 use crate::util::{CapitalDeNotificacao, RecentTable};
 
@@ -42,12 +44,17 @@ fn main() -> Result<()> {
     }
     let c4 = capitals_from_table(&rt4)?;
     
-
     let rt5 = RecentTable5::get()?;
     if false {
         dbg!(&rt5);
     }
     let c5 = capitals_from_table(&rt5)?;
+
+    let rt6 = RecentTable6::get()?;
+    if false {
+        dbg!(&rt6);
+    }
+    let c6 = capitals_from_table(&rt6)?;
     
     let rt8 = RecentTable8::get()?;
     if false {
@@ -67,6 +74,7 @@ fn main() -> Result<()> {
     assert_eq!(&c1, &c3); assert_eq!(&c2, &c3);
     assert_eq!(&c1, &c4); // println!("c4 is odd: c1 vs c4 = {:?}", compare_sets(&c1, &c4));
     assert_eq!(&c1, &c5); // println!("odd: c1 vs c5 = {:?}", crate::util::compare_sets(&c1, &c5));
+    assert_eq!(&c1, &c6); // println!("odd: c1 vs c6 = {:?}", crate::util::compare_sets(&c1, &c6));
     
     assert_eq!(&c1, &c8);
     

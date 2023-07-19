@@ -7,7 +7,7 @@ use crate::{util::{CapitalDeNotificacao, RecentTable}, easycsv::{self, CsvOption
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord4 {
     capital_de_notificacao: String,
-    values: [CsvOption<u64>; 12],
+    pub values: [CsvOption<u64>; 12],
 }
 
 impl RecentRecord4 {

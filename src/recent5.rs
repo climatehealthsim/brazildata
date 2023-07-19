@@ -7,10 +7,10 @@ use crate::{easycsv::{CsvOption, self}, util::{RecentTable, CapitalDeNotificacao
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord5 {
     capital: String,
-    ignorado: CsvOption<u64>,
-    urbana: CsvOption<u64>,
-    rural: CsvOption<u64>,
-    urb_or_rural: CsvOption<u64>,
+    pub ignorado: CsvOption<u64>,
+    pub urbana: CsvOption<u64>,
+    pub rural: CsvOption<u64>,
+    pub urb_or_rural: CsvOption<u64>,
 }
 
 impl RecentRecord5 {

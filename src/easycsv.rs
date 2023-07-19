@@ -3,7 +3,7 @@ use serde::{Deserialize, Deserializer, de::Visitor};
 use anyhow::Result;
 
 #[derive(Debug)]
-pub struct CsvOption<T>(Option<T>);
+pub struct CsvOption<T>(pub Option<T>);
 
 impl<T> Deref for CsvOption<T> {
     type Target = Option<T>;
