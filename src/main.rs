@@ -6,6 +6,7 @@ use anyhow::{Result, bail};
 use crate::easycsv::{CsvOption, optionfmt};
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct RecentRecord1 {
     capital_de_notificacao: String,
     ign_branco: u64,
@@ -28,18 +29,20 @@ impl RecentRecord1 {
             _ => panic!("invalid col number {col}")
         }
     }
+    #[allow(dead_code)]
     fn capital_de_notificacao(&self) -> &str {
         &self.capital_de_notificacao
     }
-    fn total(&self) -> Result<u64> {
-        let tot = self.ign_branco + self.domiciliar + self.trabalho + self.lazer + self.outro;
-        if tot != self.total {
-            bail!("total failure: calculated {tot} but total field says {}", self.total)
-        }
-        Ok(tot)
-    }
+    // fn total(&self) -> Result<u64> {
+    //     let tot = self.ign_branco + self.domiciliar + self.trabalho + self.lazer + self.outro;
+    //     if tot != self.total {
+    //         bail!("total failure: calculated {tot} but total field says {}", self.total)
+    //     }
+    //     Ok(tot)
+    // }
+    // ^ that's *not* it.
     fn check(&self) -> Result<()> {
-        self.total()?;
+        // self.total()?;
         Ok(())
     }
 }
@@ -135,8 +138,9 @@ const RECENT_TABLES_TSV : &'static str = "Capital de notificação	Ign/Branco	An
 ";
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct RecentRecord {
-    coordinates__capital_de_notificacao: String,
+    coordinates_and_capital_de_notificacao: String,
     ign_per_white: CsvOption<u64>,
     illiterate: CsvOption<u64>,
     _1st_to_4th_incomplete_grade_of_fs: CsvOption<u64>,
@@ -152,7 +156,7 @@ struct RecentRecord {
 
 impl RecentRecord {
     fn capital_de_notificacao(&self) -> Result<&str> {
-        let s : &str = &self.coordinates__capital_de_notificacao;
+        let s : &str = &self.coordinates_and_capital_de_notificacao;
         if let Some((coord, cap)) = s.split_once(' ') {
             if let Err(e) = u64::from_str(coord) {
                 bail!("expected coordinates in {s:?}, but: {e}")
