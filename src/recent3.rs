@@ -27,6 +27,7 @@ impl RecentRecord3 {
 
 impl CapitalDeNotificacao for RecentRecord3 {
     fn capital_de_notificacao(&self) -> Result<&str> {
+        // XXX is it correct to treat capital as capital_de_notificacao ?
         remove_coordinates(&self.coordinates_and_capitais)
     }
 }    
