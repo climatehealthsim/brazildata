@@ -5,15 +5,10 @@ mod recent3;
 mod recent8;
 mod util;
 
-use std::collections::HashSet;
-
 use anyhow::Result;
-use recent1::RecentRecord1;
-use recent2::RecentRecord2;
-use recent3::RecentRecord3;
 use recent2::RecentTable2;
 use util::capitals_from_table;
-use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3, util::compare_sets};
+use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
 use crate::util::CapitalDeNotificacao;
 
 
@@ -36,9 +31,6 @@ fn main() -> Result<()> {
         dbg!(&rt3);
     }
     let c3 = capitals_from_table(&rt3)?;
-    // dbg!(compare_sets(&c2, &c3));
-    // dbg!(compare_sets(&c1, &c3));
-    // dbg!(compare_sets(&c1, &c2));
     
     let rt8 = RecentTable8::get()?;
     if false {

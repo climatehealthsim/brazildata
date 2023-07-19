@@ -22,6 +22,7 @@ pub fn capitals_from_table<'t,
     Ok(set)
 }
 
+#[allow(unused)]
 pub fn compare_sets<'t, T: Eq + Hash>(
     s1: &'t HashSet<T>, s2: &'t HashSet<T>
 ) -> (HashSet<&'t T>, HashSet<&'t T>)
