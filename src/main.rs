@@ -1,5 +1,6 @@
 mod easycsv;
 mod util;
+mod staticdatabase;
 
 mod recent1;
 mod recent2;
@@ -19,6 +20,7 @@ use crate::recent4::RecentTable4;
 use crate::recent5::RecentTable5;
 use crate::recent6::RecentTable6;
 use crate::recent7::RecentTable7;
+use crate::staticdatabase::{StaticDatabase, CityName};
 use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
 use crate::util::{CapitalDeNotificacao, RecentTable};
 
@@ -91,6 +93,15 @@ fn main() -> Result<()> {
 
     let cpr = CasosPorRegiaoTable::get()?;
     dbg!(cpr);
+
+    let sdb = StaticDatabase::get();
+    for city in c1 {
+        if let Some(_c) = sdb.get_city(CityName(city)) {
+            // dbg!(_c);
+        } else {
+            println!("WARNING: city not found: {city:?}");
+        }
+    }
     
     Ok(())
 }
