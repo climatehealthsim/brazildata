@@ -1,29 +1,36 @@
 use std::collections::HashMap;
 
 // Regiao
+// https://en.wikipedia.org/wiki/Regions_of_Brazil
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct RegionName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct Region {
     pub name: &'static str,
+    pub most_populous_municipality: CityName<'static>,
 }
 
 const REGIONS: &[Region] = &[
     Region {
         name: "Norte",
+        most_populous_municipality: CityName("Manaus"),
     },
     Region {
         name: "Nordeste",
+        most_populous_municipality: CityName("Salvador"),
     },
     Region {
         name: "Sudeste",
+        most_populous_municipality: CityName("São Paulo"),
     },
     Region {
         name: "Sul",
+        most_populous_municipality: CityName("Curitiba"),
     },
     Region {
         name: "Centro-oeste",
+        most_populous_municipality: CityName("Brasília"),
     },
 ];
 
