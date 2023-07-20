@@ -1,4 +1,6 @@
 mod easycsv;
+mod util;
+
 mod recent1;
 mod recent2;
 mod recent3;
@@ -7,11 +9,12 @@ mod recent5;
 mod recent6;
 mod recent7;
 mod recent8;
-mod util;
+mod casos_e_pluviosidade;
 
 use anyhow::Result;
 use recent2::RecentTable2;
 use util::capitals_from_table;
+use crate::casos_e_pluviosidade::casos_por_regiao::CasosPorRegiaoTable;
 use crate::recent4::RecentTable4;
 use crate::recent5::RecentTable5;
 use crate::recent6::RecentTable6;
@@ -85,6 +88,9 @@ fn main() -> Result<()> {
     assert_eq!(&c1, &c6); // println!("odd: c1 vs c6 = {:?}", crate::util::compare_sets(&c1, &c6));
     assert_eq!(&c1, &c7); // println!("odd: c1 vs c7 = {:?}", crate::util::compare_sets(&c1, &c7));
     assert_eq!(&c1, &c8);
+
+    let cpr = CasosPorRegiaoTable::get()?;
+    dbg!(cpr);
     
     Ok(())
 }

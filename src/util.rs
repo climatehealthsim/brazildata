@@ -47,3 +47,4 @@ pub fn remove_coordinates(s: &str) -> Result<&str> {
         bail!("coordinates_* field does not have a space: {s:?}")
     }
 }
+
