@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use anyhow::{Result, bail, anyhow};
+use anyhow::{Result, anyhow};
 
 // Regiao
 // https://en.wikipedia.org/wiki/Regions_of_Brazil
@@ -51,8 +51,15 @@ pub struct StateName<'t>(pub &'t str);
 pub struct State {
     pub name: &'static str,
     pub capital: CityName<'static>,
-    pub largest_city: Option<CityName<'static>>,
+    largest_city: Option<CityName<'static>>,
     pub region: RegionName<'static>,
+}
+
+impl State {
+    #[allow(unused)]
+    pub fn largest_city(&self) -> CityName<'static> {
+        self.largest_city.or_else(|| Some(self.capital)).unwrap()
+    }
 }
 
 const STATES: &[State] = &[
