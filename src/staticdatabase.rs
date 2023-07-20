@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use anyhow::Result;
+
 // Regiao
 // https://en.wikipedia.org/wiki/Regions_of_Brazil
 
@@ -39,6 +41,7 @@ const NORTHEAST: RegionName<'static> = RegionName("Nordeste");
 const SOUTHEAST: RegionName<'static> = RegionName("Sudeste");
 const SOUTH: RegionName<'static> = RegionName("Sul");
 const CENTRAL_WEST: RegionName<'static> = RegionName("Centro-oeste");
+
 
 // https://en.wikipedia.org/wiki/States_of_Brazil
 
@@ -222,149 +225,149 @@ pub struct CityName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct City {
     pub name: &'static str,
-    pub region: RegionName<'static>,
+    pub state: Option<StateName<'static>>, // if not clear from State's info
     pub is_notification_capital: bool,
 }
 
 const CITIES: &[City] = &[
     City {
         name: "São Paulo",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Rio Branco",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Recife",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Curitiba",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Belém",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Salvador",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Rio de Janeiro",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Rio de Janeiro",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Maceió",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Fortaleza",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Manaus",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Macapá",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Brasília",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Florianópolis",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Aracaju",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Vitória",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Belo Horizonte",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "São Luís",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "João Pessoa",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Natal",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Porto Velho",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Porto Alegre",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Campo Grande",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Goiânia",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Cuiabá",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Teresina",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Palmas",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
     City {
         name: "Boa Vista",
-        region: RegionName("XX"),
+        state: None,
         is_notification_capital: true,
     },
 ];
@@ -402,5 +405,16 @@ impl StaticDatabase {
     }
     pub fn city_opt_capital_of_state(&self, city: &City) -> Option<&State> {
         self.get_state_by_capital(CityName(city.name))
+    }
+
+    pub fn check(&self) -> Result<()> {
+        for city in CITIES {
+            if let Some(state) = city.state {
+
+            } else {
+                self.get_city(city.name)
+            }
+        }
+        Ok(())
     }
 }
