@@ -83,7 +83,7 @@ const TOTAL : &[Option<u64>] = &[None, Some(5273), Some(7272), Some(2347), Some(
 
 #[derive(Debug)]
 pub struct RecentTable1 {
-    name: KString,
+    desc: String,
     records: Vec<RecentRecord1>,
 }
     
@@ -104,7 +104,7 @@ impl RecentTable1 {
     pub fn get() -> Result<RecentTable1> {
         let records = easycsv::parse_tsv::<RecentRecord1>(TSV.as_bytes())?;
         let tabl = RecentTable1 {
-            name: KString::from(file!()),
+            desc: String::from(file!()),
             records
         };
         tabl.check()?;
@@ -113,6 +113,6 @@ impl RecentTable1 {
 }
 
 impl RecentTable<RecentRecord1> for RecentTable1 {
-    fn name(&self) -> &str { &self.name }
+    fn desc(&self) -> &str { &self.desc }
     fn records(&self) -> &Vec<RecentRecord1> { &self.records }
 }

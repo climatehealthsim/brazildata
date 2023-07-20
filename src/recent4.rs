@@ -70,7 +70,7 @@ const TOTAL : &[Option<u64>] = &[
 
 #[derive(Debug)]
 pub struct RecentTable4 {
-    name: KString,
+    desc: String,
     records: Vec<RecentRecord4>,
 }
 
@@ -99,7 +99,7 @@ impl RecentTable4 {
     pub fn get() -> Result<RecentTable4> {
         let records = easycsv::parse_tsv::<RecentRecord4>(TSV.as_bytes())?;
         let tabl = RecentTable4 {
-            name: KString::from(file!()),
+            desc: String::from(file!()),
             records
         };
         tabl.check()?;
@@ -108,6 +108,6 @@ impl RecentTable4 {
 }
 
 impl RecentTable<RecentRecord4> for RecentTable4 {
-    fn name(&self) -> &str { &self.name }
+    fn desc(&self) -> &str { &self.desc }
     fn records(&self) -> &Vec<RecentRecord4> { &self.records }
 }
