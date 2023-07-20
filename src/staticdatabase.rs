@@ -1,11 +1,11 @@
 use std::collections::HashMap;
 
-use anyhow::Result;
+use anyhow::{Result, bail, anyhow};
 
 // Regiao
 // https://en.wikipedia.org/wiki/Regions_of_Brazil
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct RegionName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct Region {
@@ -45,7 +45,7 @@ const CENTRAL_WEST: RegionName<'static> = RegionName("Centro-oeste");
 
 // https://en.wikipedia.org/wiki/States_of_Brazil
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct StateName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct State {
@@ -220,153 +220,153 @@ const STATES: &[State] = &[
     },
 ];
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct CityName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct City {
-    pub name: &'static str,
+    pub name: CityName<'static>,
     pub state: Option<StateName<'static>>, // if not clear from State's info
     pub is_notification_capital: bool,
 }
 
 const CITIES: &[City] = &[
     City {
-        name: "São Paulo",
+        name: CityName("São Paulo"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Rio Branco",
+        name: CityName("Rio Branco"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Recife",
+        name: CityName("Recife"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Curitiba",
+        name: CityName("Curitiba"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Belém",
+        name: CityName("Belém"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Salvador",
+        name: CityName("Salvador"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Rio de Janeiro",
+        name: CityName("Rio de Janeiro"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Rio de Janeiro",
+        name: CityName("Rio de Janeiro"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Maceió",
+        name: CityName("Maceió"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Fortaleza",
+        name: CityName("Fortaleza"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Manaus",
+        name: CityName("Manaus"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Macapá",
+        name: CityName("Macapá"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Brasília",
+        name: CityName("Brasília"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Florianópolis",
+        name: CityName("Florianópolis"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Aracaju",
+        name: CityName("Aracaju"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Vitória",
+        name: CityName("Vitória"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Belo Horizonte",
+        name: CityName("Belo Horizonte"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "São Luís",
+        name: CityName("São Luís"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "João Pessoa",
+        name: CityName("João Pessoa"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Natal",
+        name: CityName("Natal"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Porto Velho",
+        name: CityName("Porto Velho"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Porto Alegre",
+        name: CityName("Porto Alegre"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Campo Grande",
+        name: CityName("Campo Grande"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Goiânia",
+        name: CityName("Goiânia"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Cuiabá",
+        name: CityName("Cuiabá"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Teresina",
+        name: CityName("Teresina"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Palmas",
+        name: CityName("Palmas"),
         state: None,
         is_notification_capital: true,
     },
     City {
-        name: "Boa Vista",
+        name: CityName("Boa Vista"),
         state: None,
         is_notification_capital: true,
     },
@@ -384,9 +384,9 @@ impl StaticDatabase {
         StaticDatabase {
             // XX: detect duplicates
             regions: REGIONS.iter().map(|v| (RegionName(v.name), v)).collect(),
-            cities: CITIES.iter().map(|v| (CityName(v.name), v)).collect(),
+            cities: CITIES.iter().map(|v| (v.name, v)).collect(),
             states: STATES.iter().map(|v| (StateName(v.name), v)).collect(),
-            states_by_capital: STATES.iter().map(|v| (v.capital.clone(), v)).collect(),
+            states_by_capital: STATES.iter().map(|v| (v.capital, v)).collect(),
         }
     }
     #[allow(unused)]
@@ -404,16 +404,23 @@ impl StaticDatabase {
         self.states_by_capital.get(&key).map(|v| *v)
     }
     pub fn city_opt_capital_of_state(&self, city: &City) -> Option<&State> {
-        self.get_state_by_capital(CityName(city.name))
+        self.get_state_by_capital(city.name)
+    }
+    pub fn city_state(&self, city: &City) -> Result<&State> {
+        if let Some(statename) = city.state {
+            self.get_state(statename).ok_or_else(
+                || anyhow!("unknown {statename:?}"))
+        } else {
+            self.city_opt_capital_of_state(city).ok_or_else(
+                || anyhow!(
+                    "city is not a capital but does not have state field set: {:?}",
+                    city.name))
+        }
     }
 
     pub fn check(&self) -> Result<()> {
         for city in CITIES {
-            if let Some(state) = city.state {
-
-            } else {
-                self.get_city(city.name)
-            }
+            self.city_state(city)?;
         }
         Ok(())
     }
