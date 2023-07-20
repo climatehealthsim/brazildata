@@ -95,13 +95,25 @@ fn main() -> Result<()> {
     dbg!(cpr);
 
     let sdb = StaticDatabase::get();
-    for city in c1 {
-        if let Some(_c) = sdb.get_city(CityName(city)) {
-            // dbg!(_c);
+    for cityname in c1 {
+        if let Some(city) = sdb.get_city(CityName(cityname)) {
+            // dbg!(city);
+            let is_capital =
+                if let Some(state) = sdb.city_opt_capital_of_state(city) {
+                    println!("City is state capital of: {:?} {:?}",
+                             city.name, state.name);
+                    true
+                } else {
+                    println!("City is not a state capital: {:?}",
+                             city.name);
+                    false
+                };
+            assert_eq!(is_capital, city.is_notification_capital);
         } else {
-            println!("WARNING: city not found: {city:?}");
+            println!("WARNING: city not found: {cityname:?}");
         }
     }
-    
+
+    println!("===OK===");
     Ok(())
 }
