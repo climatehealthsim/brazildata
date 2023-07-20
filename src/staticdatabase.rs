@@ -35,116 +35,144 @@ pub struct StateName<'t>(pub &'t str);
 pub struct State {
     pub name: &'static str,
     pub capital: CityName<'static>,
+    pub largest_city: Option<CityName<'static>>,
 }
 
 const STATES: &[State] = &[
     State {
         name: "Acre",
         capital: CityName("Rio Branco"),
+        largest_city: None,
     },
     State {
         name: "Alagoas",
         capital: CityName("Maceió"),
+        largest_city: None,
     },
     State {
         name: "Amapá",
         capital: CityName("Macapá"),
+        largest_city: None,
     },
     State {
         name: "Amazonas",
         capital: CityName("Manaus"),
+        largest_city: None,
     },
     State {
         name: "Bahia",
         capital: CityName("Salvador"),
+        largest_city: None,
     },
     State {
         name: "Ceará",
         capital: CityName("Fortaleza"),
+        largest_city: None,
     },
     State {
         name: "Distrito Federal",
         capital: CityName("Brasília"),
+        largest_city: None,
     },
     State {
         name: "Espírito Santo",
-        capital: CityName("Vitória"), // largest city: Serra
+        capital: CityName("Vitória"),
+        largest_city: Some(CityName("Serra")),
     },
     State {
         name: "Goiás",
         capital: CityName("Goiânia"),
+        largest_city: None,
     },
     State {
         name: "Maranhão",
         capital: CityName("São Luís"),
+        largest_city: None,
     },
     State {
         name: "Mato Grosso",
         capital: CityName("Cuiabá"),
+        largest_city: None,
     },
     State {
         name: "Mato Grosso do Sul",
         capital: CityName("Campo Grande"),
+        largest_city: None,
     },
     State {
         name: "Minas Gerais",
         capital: CityName("Belo Horizonte"),
+        largest_city: None,
     },
     State {
         name: "Pará",
         capital: CityName("Belém"),
+        largest_city: None,
     },
     State {
         name: "Paraíba",
         capital: CityName("João Pessoa"),
+        largest_city: None,
     },
     State {
         name: "Paraná",
         capital: CityName("Curitiba"),
+        largest_city: None,
     },
     State {
         name: "Pernambuco",
         capital: CityName("Recife"),
+        largest_city: None,
     },
     State {
         name: "Piauí",
         capital: CityName("Teresina"),
+        largest_city: None,
     },
     State {
         name: "Rio de Janeiro",
         capital: CityName("Rio de Janeiro"),
+        largest_city: None,
     },
     State {
         name: "Rio Grande do Norte",
         capital: CityName("Natal"),
+        largest_city: None,
     },
     State {
         name: "Rio Grande do Sul",
         capital: CityName("Porto Alegre"),
+        largest_city: None,
     },
     State {
         name: "Rondônia",
         capital: CityName("Porto Velho"),
+        largest_city: None,
     },
     State {
         name: "Roraima",
         capital: CityName("Boa Vista"),
+        largest_city: None,
     },
     State {
         name: "Santa Catarina",
-        capital: CityName("Florianópolis"), // Joinville
+        capital: CityName("Florianópolis"),
+        largest_city: Some(CityName("Joinville")),
     },
     State {
         name: "São Paulo",
         capital: CityName("São Paulo"),
+        largest_city: None,
     },
     State {
         name: "Sergipe",
         capital: CityName("Aracaju"),
+        largest_city: None,
     },
     State {
         name: "Tocantins",
         capital: CityName("Palmas"),
+        largest_city: None,
     },
 ];
 
