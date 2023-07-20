@@ -34,6 +34,12 @@ const REGIONS: &[Region] = &[
     },
 ];
 
+const NORTH: RegionName<'static> = RegionName("Norte");
+const NORTHEAST: RegionName<'static> = RegionName("Nordeste");
+const SOUTHEAST: RegionName<'static> = RegionName("Sudeste");
+const SOUTH: RegionName<'static> = RegionName("Sul");
+const CENTRAL_WEST: RegionName<'static> = RegionName("Centro-oeste");
+
 // https://en.wikipedia.org/wiki/States_of_Brazil
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -43,6 +49,7 @@ pub struct State {
     pub name: &'static str,
     pub capital: CityName<'static>,
     pub largest_city: Option<CityName<'static>>,
+    pub region: RegionName<'static>,
 }
 
 const STATES: &[State] = &[
@@ -50,136 +57,163 @@ const STATES: &[State] = &[
         name: "Acre",
         capital: CityName("Rio Branco"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Alagoas",
         capital: CityName("Maceió"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Amapá",
         capital: CityName("Macapá"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Amazonas",
         capital: CityName("Manaus"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Bahia",
         capital: CityName("Salvador"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Ceará",
         capital: CityName("Fortaleza"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Distrito Federal",
         capital: CityName("Brasília"),
         largest_city: None,
+        region: CENTRAL_WEST,
     },
     State {
         name: "Espírito Santo",
         capital: CityName("Vitória"),
         largest_city: Some(CityName("Serra")),
+        region: SOUTHEAST,
     },
     State {
         name: "Goiás",
         capital: CityName("Goiânia"),
         largest_city: None,
+        region: CENTRAL_WEST,
     },
     State {
         name: "Maranhão",
         capital: CityName("São Luís"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Mato Grosso",
         capital: CityName("Cuiabá"),
         largest_city: None,
+        region: CENTRAL_WEST,
     },
     State {
         name: "Mato Grosso do Sul",
         capital: CityName("Campo Grande"),
         largest_city: None,
+        region: CENTRAL_WEST,
     },
     State {
         name: "Minas Gerais",
         capital: CityName("Belo Horizonte"),
         largest_city: None,
+        region: SOUTHEAST,
     },
     State {
         name: "Pará",
         capital: CityName("Belém"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Paraíba",
         capital: CityName("João Pessoa"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Paraná",
         capital: CityName("Curitiba"),
         largest_city: None,
+        region: SOUTH,
     },
     State {
         name: "Pernambuco",
         capital: CityName("Recife"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Piauí",
         capital: CityName("Teresina"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Rio de Janeiro",
         capital: CityName("Rio de Janeiro"),
         largest_city: None,
+        region: SOUTHEAST,
     },
     State {
         name: "Rio Grande do Norte",
         capital: CityName("Natal"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Rio Grande do Sul",
         capital: CityName("Porto Alegre"),
         largest_city: None,
+        region: SOUTH,
     },
     State {
         name: "Rondônia",
         capital: CityName("Porto Velho"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Roraima",
         capital: CityName("Boa Vista"),
         largest_city: None,
+        region: NORTH,
     },
     State {
         name: "Santa Catarina",
         capital: CityName("Florianópolis"),
         largest_city: Some(CityName("Joinville")),
+        region: SOUTH,
     },
     State {
         name: "São Paulo",
         capital: CityName("São Paulo"),
         largest_city: None,
+        region: SOUTHEAST,
     },
     State {
         name: "Sergipe",
         capital: CityName("Aracaju"),
         largest_city: None,
+        region: NORTHEAST,
     },
     State {
         name: "Tocantins",
         capital: CityName("Palmas"),
         largest_city: None,
+        region: NORTH,
     },
 ];
 
