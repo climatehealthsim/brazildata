@@ -1,4 +1,5 @@
 use anyhow::{Result, bail};
+use kstring::KString;
 use serde::Deserialize;
 
 use crate::{easycsv::{CsvMonth, self}, util::RecentTable};
@@ -57,7 +58,7 @@ const TOTAL: &[Option<u64>] = &[None, Some(5624), Some(6051), Some(13280), Some(
 
 #[derive(Debug)]
 pub struct CasosPorRegiaoTable {
-    name: String,
+    name: KString,
     records: Vec<CasosPorRegiaoRecord>,
 }
     
@@ -79,7 +80,7 @@ impl CasosPorRegiaoTable {
     pub fn get() -> Result<CasosPorRegiaoTable> {
         let records = easycsv::parse_tsv::<CasosPorRegiaoRecord>(TSV.as_bytes())?;
         let tabl = CasosPorRegiaoTable {
-            name: String::from(file!()) + " (" + SOURCE + ")",
+            name: (String::from(file!()) + " (" + SOURCE + ")").into(),
             records
         };
         tabl.check()?;

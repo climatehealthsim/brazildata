@@ -1,11 +1,12 @@
 use anyhow::{Result, bail};
+use kstring::KString;
 use serde::Deserialize;
 
 use crate::{easycsv, util::{remove_coordinates, CapitalDeNotificacao, RecentTable}};
 
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord2 {
-    coordinates_and_capitais: String, // capitais = capitals
+    coordinates_and_capitais: KString, // capitais = capitals
     pub ign_branco: u64,
     pub cura: u64,
     pub obito: u64,
@@ -65,7 +66,7 @@ const TOTAL : &[Option<u64>] = &[None, Some(1581), Some(13332), Some(1835)];
 
 #[derive(Debug)]
 pub struct RecentTable2 {
-    name: String,
+    name: KString,
     records: Vec<RecentRecord2>,
 }
     
@@ -87,7 +88,7 @@ impl RecentTable2 {
     pub fn get() -> Result<RecentTable2> {
         let records = easycsv::parse_tsv::<RecentRecord2>(TSV.as_bytes())?;
         let tabl = RecentTable2 {
-            name: String::from(file!()),
+            name: KString::from(file!()),
             records
         };
         tabl.check()?;

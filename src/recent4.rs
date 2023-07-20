@@ -1,4 +1,5 @@
 use anyhow::Result;
+use kstring::KString;
 use serde::Deserialize;
 
 use crate::{util::{CapitalDeNotificacao, RecentTable}, easycsv::{self, CsvOption}};
@@ -6,7 +7,7 @@ use crate::{util::{CapitalDeNotificacao, RecentTable}, easycsv::{self, CsvOption
 
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord4 {
-    capital_de_notificacao: String,
+    capital_de_notificacao: KString,
     pub values: [CsvOption<u64>; 12],
 }
 
@@ -69,7 +70,7 @@ const TOTAL : &[Option<u64>] = &[
 
 #[derive(Debug)]
 pub struct RecentTable4 {
-    name: String,
+    name: KString,
     records: Vec<RecentRecord4>,
 }
 
@@ -98,7 +99,7 @@ impl RecentTable4 {
     pub fn get() -> Result<RecentTable4> {
         let records = easycsv::parse_tsv::<RecentRecord4>(TSV.as_bytes())?;
         let tabl = RecentTable4 {
-            name: String::from(file!()),
+            name: KString::from(file!()),
             records
         };
         tabl.check()?;

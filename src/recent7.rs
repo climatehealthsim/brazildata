@@ -1,11 +1,12 @@
 use anyhow::{Result, bail};
+use kstring::KString;
 use serde::Deserialize;
 
 use crate::{easycsv::{CsvOption, self}, util::{CapitalDeNotificacao, RecentTable}};
 
 #[derive(Debug, Deserialize)]
 pub struct RecentRecord7 {
-    capital: String,
+    capital: KString,
     pub ig_nao_preench: CsvOption<u64>,
     pub nenhum_ano_concluido: CsvOption<u64>,
     pub _1_a_3_anos_concl: CsvOption<u64>,
@@ -76,7 +77,7 @@ const TOTAL: &[Option<u64>] = &[None, Some(1481), Some(123), Some(460), Some(838
 
 #[derive(Debug)]
 pub struct RecentTable7 {
-    name: String,
+    name: KString,
     records: Vec<RecentRecord7>,
 }
     
@@ -101,7 +102,7 @@ impl RecentTable7 {
     pub fn get() -> Result<RecentTable7> {
         let records = easycsv::parse_tsv::<RecentRecord7>(TSV.as_bytes())?;
         let tabl = RecentTable7 {
-            name: String::from(file!()),
+            name: KString::from(file!()),
             records
         };
         tabl.check()?;
