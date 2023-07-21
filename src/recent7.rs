@@ -44,7 +44,7 @@ impl CapitalDeNotificacao for RecentRecord7 {
 // Notas:
 // Excluídos casos não residentes no Brasil
 // Períodos Disponíveis ou período - Correspondem aos anos de notificação dos casos.
-const TSV: &'static str = "Capital	ig/nao preench	nenhum ano concluído	1 a 3 anos concl.	4 a 7 anos concl.	8 a 11 concl.	de 12 e + anos concl.	Nao se aplica
+const TSV: &str = "Capital	ig/nao preench	nenhum ano concluído	1 a 3 anos concl.	4 a 7 anos concl.	8 a 11 concl.	de 12 e + anos concl.	Nao se aplica
 Porto Velho	1	-	1	3	4	-	-
 Rio Branco	119	22	123	120	59	4	32
 Manaus	27	2	10	28	21	4	4

@@ -50,7 +50,7 @@ impl CapitalDeNotificacao for RecentRecord6 {
 // Dados de 2013 atualizados em 02/10/2015, sujeitos à revisão.
 // Dados de 2014 atualizados em 02/10/2015, sujeitos à revisão.
 // Dados de 2015 atualizados em 02/10/2015, sujeitos à revisão.
-const TSV: &'static str = "Capital de notificação	Ign/Branco	Urbana	Rural	Periurbana	
+const TSV: &str = "Capital de notificação	Ign/Branco	Urbana	Rural	Periurbana	
 355030 São Paulo	81	1984	11	18	12859
 120040 Rio Branco	38	1559	271	42	2094
 261160 Recife	61	1173	26	8	1910
