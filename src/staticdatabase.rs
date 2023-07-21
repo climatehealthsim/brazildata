@@ -9,29 +9,29 @@ use anyhow::{Result, anyhow};
 pub struct RegionName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct Region {
-    pub name: &'static str,
+    pub name: RegionName<'static>,
     pub most_populous_municipality: CityName<'static>,
 }
 
 const REGIONS: &[Region] = &[
     Region {
-        name: "Norte",
+        name: RegionName("Norte"),
         most_populous_municipality: CityName("Manaus"),
     },
     Region {
-        name: "Nordeste",
+        name: RegionName("Nordeste"),
         most_populous_municipality: CityName("Salvador"),
     },
     Region {
-        name: "Sudeste",
+        name: RegionName("Sudeste"),
         most_populous_municipality: CityName("São Paulo"),
     },
     Region {
-        name: "Sul",
+        name: RegionName("Sul"),
         most_populous_municipality: CityName("Curitiba"),
     },
     Region {
-        name: "Centro-oeste",
+        name: RegionName("Centro-oeste"),
         most_populous_municipality: CityName("Brasília"),
     },
 ];
@@ -49,7 +49,7 @@ const CENTRAL_WEST: RegionName<'static> = RegionName("Centro-oeste");
 pub struct StateName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct State {
-    pub name: &'static str,
+    pub name: StateName<'static>,
     pub capital: CityName<'static>,
     largest_city: Option<CityName<'static>>,
     pub region: RegionName<'static>,
@@ -64,163 +64,163 @@ impl State {
 
 const STATES: &[State] = &[
     State {
-        name: "Acre",
+        name: StateName("Acre"),
         capital: CityName("Rio Branco"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Alagoas",
+        name: StateName("Alagoas"),
         capital: CityName("Maceió"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Amapá",
+        name: StateName("Amapá"),
         capital: CityName("Macapá"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Amazonas",
+        name: StateName("Amazonas"),
         capital: CityName("Manaus"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Bahia",
+        name: StateName("Bahia"),
         capital: CityName("Salvador"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Ceará",
+        name: StateName("Ceará"),
         capital: CityName("Fortaleza"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Distrito Federal",
+        name: StateName("Distrito Federal"),
         capital: CityName("Brasília"),
         largest_city: None,
         region: CENTRAL_WEST,
     },
     State {
-        name: "Espírito Santo",
+        name: StateName("Espírito Santo"),
         capital: CityName("Vitória"),
         largest_city: Some(CityName("Serra")),
         region: SOUTHEAST,
     },
     State {
-        name: "Goiás",
+        name: StateName("Goiás"),
         capital: CityName("Goiânia"),
         largest_city: None,
         region: CENTRAL_WEST,
     },
     State {
-        name: "Maranhão",
+        name: StateName("Maranhão"),
         capital: CityName("São Luís"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Mato Grosso",
+        name: StateName("Mato Grosso"),
         capital: CityName("Cuiabá"),
         largest_city: None,
         region: CENTRAL_WEST,
     },
     State {
-        name: "Mato Grosso do Sul",
+        name: StateName("Mato Grosso do Sul"),
         capital: CityName("Campo Grande"),
         largest_city: None,
         region: CENTRAL_WEST,
     },
     State {
-        name: "Minas Gerais",
+        name: StateName("Minas Gerais"),
         capital: CityName("Belo Horizonte"),
         largest_city: None,
         region: SOUTHEAST,
     },
     State {
-        name: "Pará",
+        name: StateName("Pará"),
         capital: CityName("Belém"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Paraíba",
+        name: StateName("Paraíba"),
         capital: CityName("João Pessoa"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Paraná",
+        name: StateName("Paraná"),
         capital: CityName("Curitiba"),
         largest_city: None,
         region: SOUTH,
     },
     State {
-        name: "Pernambuco",
+        name: StateName("Pernambuco"),
         capital: CityName("Recife"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Piauí",
+        name: StateName("Piauí"),
         capital: CityName("Teresina"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Rio de Janeiro",
+        name: StateName("Rio de Janeiro"),
         capital: CityName("Rio de Janeiro"),
         largest_city: None,
         region: SOUTHEAST,
     },
     State {
-        name: "Rio Grande do Norte",
+        name: StateName("Rio Grande do Norte"),
         capital: CityName("Natal"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Rio Grande do Sul",
+        name: StateName("Rio Grande do Sul"),
         capital: CityName("Porto Alegre"),
         largest_city: None,
         region: SOUTH,
     },
     State {
-        name: "Rondônia",
+        name: StateName("Rondônia"),
         capital: CityName("Porto Velho"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Roraima",
+        name: StateName("Roraima"),
         capital: CityName("Boa Vista"),
         largest_city: None,
         region: NORTH,
     },
     State {
-        name: "Santa Catarina",
+        name: StateName("Santa Catarina"),
         capital: CityName("Florianópolis"),
         largest_city: Some(CityName("Joinville")),
         region: SOUTH,
     },
     State {
-        name: "São Paulo",
+        name: StateName("São Paulo"),
         capital: CityName("São Paulo"),
         largest_city: None,
         region: SOUTHEAST,
     },
     State {
-        name: "Sergipe",
+        name: StateName("Sergipe"),
         capital: CityName("Aracaju"),
         largest_city: None,
         region: NORTHEAST,
     },
     State {
-        name: "Tocantins",
+        name: StateName("Tocantins"),
         capital: CityName("Palmas"),
         largest_city: None,
         region: NORTH,
@@ -390,9 +390,9 @@ impl StaticDatabase {
     pub fn get() -> StaticDatabase {
         StaticDatabase {
             // XX: detect duplicates
-            regions: REGIONS.iter().map(|v| (RegionName(v.name), v)).collect(),
+            regions: REGIONS.iter().map(|v| (v.name, v)).collect(),
             cities: CITIES.iter().map(|v| (v.name, v)).collect(),
-            states: STATES.iter().map(|v| (StateName(v.name), v)).collect(),
+            states: STATES.iter().map(|v| (v.name, v)).collect(),
             states_by_capital: STATES.iter().map(|v| (v.capital, v)).collect(),
         }
     }
