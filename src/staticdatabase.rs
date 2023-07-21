@@ -1,7 +1,27 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, hash::Hash, fmt::Debug};
 
-use anyhow::{Result, anyhow};
+use anyhow::{Result, anyhow, bail};
 
+// -----------------------------------------------------------------------------
+// Utils
+
+fn primary_index<'k,'v,
+                 K: 'k + Hash + Eq + Clone + Debug,
+                 V: 'v + Debug>(
+    vs: &'v [V],
+    key: impl Fn(&V) -> K,
+) -> Result<HashMap<K, &'v V>> {
+    let mut m = HashMap::new();
+    for v in vs {
+        let k = key(v);
+        if let Some(old) = m.insert(k.clone(), v) {
+            bail!("duplicate entry for key {k:?}: {old:?} <-> {v:?}")
+        }
+    }
+    Ok(m)
+}
+
+// -----------------------------------------------------------------------------
 // Regiao
 // https://en.wikipedia.org/wiki/Regions_of_Brazil
 
@@ -43,6 +63,7 @@ const SOUTH: RegionName<'static> = RegionName("Sul");
 const CENTRAL_WEST: RegionName<'static> = RegionName("Centro-oeste");
 
 
+// -----------------------------------------------------------------------------
 // https://en.wikipedia.org/wiki/States_of_Brazil
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -227,6 +248,8 @@ const STATES: &[State] = &[
     },
 ];
 
+// -----------------------------------------------------------------------------
+
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct CityName<'t>(pub &'t str);
 #[derive(Debug)]
@@ -379,6 +402,8 @@ const CITIES: &[City] = &[
     },
 ];
 
+// -----------------------------------------------------------------------------
+
 pub struct StaticDatabase {
     regions: HashMap<RegionName<'static>, &'static Region>,
     cities: HashMap<CityName<'static>, &'static City>,
@@ -387,14 +412,13 @@ pub struct StaticDatabase {
 }
 
 impl StaticDatabase {
-    pub fn get() -> StaticDatabase {
-        StaticDatabase {
-            // XX: detect duplicates
-            regions: REGIONS.iter().map(|v| (v.name, v)).collect(),
-            cities: CITIES.iter().map(|v| (v.name, v)).collect(),
-            states: STATES.iter().map(|v| (v.name, v)).collect(),
-            states_by_capital: STATES.iter().map(|v| (v.capital, v)).collect(),
-        }
+    pub fn get() -> Result<StaticDatabase> {
+        Ok(StaticDatabase {
+            regions: primary_index(REGIONS, |v| v.name)?,
+            cities: primary_index(CITIES, |v| v.name)?,
+            states: primary_index(STATES, |v| v.name)?,
+            states_by_capital: primary_index(STATES, |v| v.capital)?,
+        })
     }
     #[allow(unused)]
     pub fn get_region(&self, key: RegionName) -> Option<&Region> {

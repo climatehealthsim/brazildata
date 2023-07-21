@@ -94,7 +94,7 @@ fn main() -> Result<()> {
     let cpr = CasosPorRegiaoTable::get()?;
     dbg!(cpr);
 
-    let sdb = StaticDatabase::get();
+    let sdb = StaticDatabase::get()?;
     sdb.check()?;
     for cityname_str in c1 {
         let cityname = CityName(cityname_str);
