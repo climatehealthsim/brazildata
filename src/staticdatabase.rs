@@ -256,7 +256,7 @@ pub struct CityName<'t>(pub &'t str);
 pub struct City {
     pub name: CityName<'static>,
     pub state: Option<StateName<'static>>, // if not clear from State's info
-    pub is_notification_capital: bool,
+    pub is_notification_capital: bool, // XX is this superfluous? Look up in State.
 }
 
 const CITIES: &[City] = &[
