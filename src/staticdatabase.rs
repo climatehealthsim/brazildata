@@ -6,15 +6,15 @@ use anyhow::{Result, anyhow, bail};
 // Utils
 
 fn primary_index<'k,'v,
-                 K: 'k + Hash + Eq + Clone + Debug,
+                 K: 'k + Hash + Eq + Debug,
                  V: 'v + Debug>(
     vs: &'v [V],
     key: impl Fn(&V) -> K,
 ) -> Result<HashMap<K, &'v V>> {
     let mut m = HashMap::new();
     for v in vs {
-        let k = key(v);
-        if let Some(old) = m.insert(k.clone(), v) {
+        if let Some(old) = m.insert(key(v), v) {
+            let k = key(v);
             bail!("duplicate entry for key {k:?}: {old:?} <-> {v:?}")
         }
     }
