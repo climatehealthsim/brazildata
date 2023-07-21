@@ -296,11 +296,6 @@ const CITIES: &[City] = &[
         is_notification_capital: true,
     },
     City {
-        name: CityName("Rio de Janeiro"),
-        state: None,
-        is_notification_capital: true,
-    },
-    City {
         name: CityName("Maceió"),
         state: None,
         is_notification_capital: true,
