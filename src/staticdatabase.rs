@@ -403,7 +403,6 @@ impl StaticDatabase {
     pub fn get_city(&self, key: CityName) -> Option<&City> {
         self.cities.get(&key).map(|v| *v)
     }
-    #[allow(unused)]
     pub fn get_state(&self, key: StateName) -> Option<&State> {
         self.states.get(&key).map(|v| *v)
     }
