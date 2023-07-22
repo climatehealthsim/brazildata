@@ -13,16 +13,18 @@ mod recent8;
 mod casos_e_pluviosidade;
 
 use anyhow::Result;
-use recent2::RecentTable2;
-use util::capitals_from_table;
 use crate::casos_e_pluviosidade::casos_por_regiao::CasosPorRegiaoTable;
+use crate::recent1::RecentTable1;
+use crate::recent2::RecentTable2;
+use crate::recent3::RecentTable3;
 use crate::recent4::RecentTable4;
 use crate::recent5::RecentTable5;
 use crate::recent6::RecentTable6;
 use crate::recent7::RecentTable7;
+use crate::recent8::RecentTable8;
 use crate::staticdatabase::{StaticDatabase, CityName};
-use crate::{easycsv::optionfmt, recent1::RecentTable1, recent8::RecentTable8, recent3::RecentTable3};
-use crate::util::{CapitalDeNotificacao, RecentTable};
+use crate::easycsv::optionfmt;
+use crate::util::{capitals_from_table, CapitalDeNotificacao, RecentTable};
 
 
 fn main() -> Result<()> {
