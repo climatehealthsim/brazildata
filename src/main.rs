@@ -123,18 +123,26 @@ fn main() -> Result<()> {
         }
     }
 
-    for (_, municipality) in sdb.municipality_by_municipalityname {
+    if false {
+        for (_, municipality) in &sdb.municipality_by_municipalityname {
+            if let Some(coord) = municipality.coordinates {
+                let c = parse_coordinates(coord, 0.)?;
+                println!("Municipality {:?} is at {},{} ({c:?})", municipality.name.0,
+                         c.latitude_degrees(), c.longitude_degrees());
+            }
+        }
+    }
+    
+    for (_, municipality) in sdb.municipalities_in_state(StateName("Acre"))? {
         if let Some(coord) = municipality.coordinates {
             let c = parse_coordinates(coord, 0.)?;
             println!("Municipality {:?} is at {},{} ({c:?})", municipality.name.0,
                      c.latitude_degrees(), c.longitude_degrees());
+        } else {
+            println!("Municipality {:?} has no coordinates", municipality.name.0);
         }
     }
 
-    for (_, municipality) in sdb.municipalities_by_statename(StateName("Acre"))? {
-        
-    }
-    
     println!("===OK===");
     Ok(())
 }
