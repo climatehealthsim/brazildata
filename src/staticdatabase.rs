@@ -256,144 +256,116 @@ pub struct CityName<'t>(pub &'t str);
 pub struct City {
     pub name: CityName<'static>,
     pub state: Option<StateName<'static>>, // if not clear from State's info
-    pub is_notification_capital: bool, // XX is this superfluous? Look up in State.
 }
 
 const CITIES: &[City] = &[
     City {
         name: CityName("São Paulo"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Rio Branco"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Recife"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Curitiba"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Belém"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Salvador"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Rio de Janeiro"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Maceió"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Fortaleza"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Manaus"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Macapá"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Brasília"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Florianópolis"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Aracaju"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Vitória"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Belo Horizonte"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("São Luís"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("João Pessoa"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Natal"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Porto Velho"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Porto Alegre"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Campo Grande"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Goiânia"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Cuiabá"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Teresina"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Palmas"),
         state: None,
-        is_notification_capital: true,
     },
     City {
         name: CityName("Boa Vista"),
         state: None,
-        is_notification_capital: true,
     },
 ];
 
@@ -440,6 +412,24 @@ impl StaticDatabase {
                 || anyhow!(
                     "city is not a capital but does not have state field set: {:?}",
                     city.name))
+        }
+    }
+    pub fn city_is_notification_capital(&self, city: &City) -> Result<bool> {
+        if let Some(state) = self.states_by_capital.get(&city.name) {
+            if let Some(city_state) = city.state {
+                if city_state == state.name {
+                    println!("NOTE: {:?} unnecessarily lists the state {:?} in its state field, it's known from the registration in the state already",
+                             city.name, state.name);
+                    Ok(true)
+                } else {
+                    bail!("{:?} is registered as the capital for {state:?}, but the city itself lists {city_state:?} as the state",
+                          city.name)
+                }
+            } else {
+                Ok(true)
+            }
+        }  else {
+            Ok(false)
         }
     }
 

@@ -112,7 +112,7 @@ fn main() -> Result<()> {
                              city.name);
                     false
                 };
-            assert_eq!(is_capital, city.is_notification_capital);
+            assert_eq!(is_capital, sdb.city_is_notification_capital(&city)?);
         } else {
             println!("WARNING: unknown {cityname:?}");
         }
