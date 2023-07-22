@@ -263,12 +263,12 @@ const MUNICIPALITIES: &[Municipality] = &[
     Municipality {
         name: MunicipalityName("São Paulo"),
         state: None,
-        coordinates: None,
+        coordinates: Some("23°33′S 46°38′W"),
     },
     Municipality {
         name: MunicipalityName("Rio Branco"),
         state: None, // Acre
-        coordinates: None,
+        coordinates: Some("9°58′29″S 67°48′36″W"),
     },
     Municipality {
         name: MunicipalityName("Rio Branco, Mato Grosso"),
