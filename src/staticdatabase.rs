@@ -267,9 +267,16 @@ const CITIES: &[City] = &[
     },
     City {
         name: CityName("Rio Branco"),
-        state: None,
+        state: None, // Acre
         coordinates: None,
     },
+    City {
+        name: CityName("Rio Branco, Mato Grosso"),
+        state: Some(StateName("Mato Grosso")),
+        coordinates: Some("15.2408°S 58.1158°W"),
+        // pop 2020  5 150
+    },
+    // Rio Branco, Rio Grande do Sul = neighbourhood, not municipality
     City {
         name: CityName("Recife"),
         state: None,
@@ -401,7 +408,7 @@ const CITIES: &[City] = &[
     // Cruzeiro do Sul, Paraná, a town in the state of Paraná, Brazil
     // Cruzeiro do Sul, Rio Grande do Sul, a town in the state of Rio Grande do Sul, Brazil 
     City {
-        name: CityName("Cruzeiro do Sul, Acre"),
+        name: CityName("Cruzeiro do Sul"), // , Acre
         state: Some(StateName("Acre")),
         // population 2020 est. 89,072
         // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Acre)
@@ -420,6 +427,24 @@ const CITIES: &[City] = &[
         // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Rio_Grande_do_Sul)
         // population 2021: 12 457
         coordinates: Some(r#"29° 30' 46" S 51° 59' 06" O"#),
+    },
+
+    City {
+        name: CityName("Tarauacá"),
+        state: Some(StateName("Acre")),
+        coordinates: Some("08°09′39″S 70°45′57″W"),
+        // pop 2020 43,151
+    },
+    City {
+        name: CityName("Sena Madureira"),
+        state: Some(StateName("Acre")),
+        coordinates: Some("09°03′57″S 68°39′25″W"),
+        // pop 2020 46,511
+    },
+    City {
+        name: CityName("Brasileia"),
+        state: Some(StateName("Acre")),
+        coordinates: Some("11°00′S 68°44′W"),
     },
 ];
 
