@@ -1,7 +1,7 @@
 mod easycsv;
 mod util;
 mod staticdatabase;
-
+mod coordinates;
 mod recent1;
 mod recent2;
 mod recent3;
@@ -14,6 +14,7 @@ mod casos_e_pluviosidade;
 
 use anyhow::Result;
 use crate::casos_e_pluviosidade::casos_por_regiao::CasosPorRegiaoTable;
+use crate::coordinates::parse_coordinates;
 use crate::recent1::RecentTable1;
 use crate::recent2::RecentTable2;
 use crate::recent3::RecentTable3;
@@ -118,6 +119,11 @@ fn main() -> Result<()> {
         }
     }
 
+    let c = parse_coordinates(r#"7° 37' 51" S 72° 40' 12" O"#, 0.)?;
+    println!("{c:?}");
+    println!("{},{}", c.latitude_degrees(), c.longitude_degrees());
+    
+    
     println!("===OK===");
     Ok(())
 }
