@@ -14,6 +14,7 @@ mod casos_e_pluviosidade;
 
 use anyhow::Result;
 use crate::casos_e_pluviosidade::casos_por_regiao::CasosPorRegiaoTable;
+use crate::casos_e_pluviosidade::cidades_do_acre::CidadesDoAcreTable;
 use crate::coordinates::parse_coordinates;
 use crate::recent1::RecentTable1;
 use crate::recent2::RecentTable2;
@@ -94,8 +95,11 @@ fn main() -> Result<()> {
     assert_eq!(&c1, &c7); // println!("odd: c1 vs c7 = {:?}", crate::util::compare_sets(&c1, &c7));
     assert_eq!(&c1, &c8);
 
-    let cpr = CasosPorRegiaoTable::get()?;
-    dbg!(cpr);
+    let _cpr = CasosPorRegiaoTable::get()?;
+    // dbg!(_cpr);
+    let _cda = CidadesDoAcreTable::get()?;
+    dbg!(_cda);
+    
 
     let sdb = StaticDatabase::get()?;
     sdb.check()?;
@@ -126,6 +130,8 @@ fn main() -> Result<()> {
                      c.latitude_degrees(), c.longitude_degrees());
         }
     }
+
+    // cases_by_municipalityname
     
     println!("===OK===");
     Ok(())
