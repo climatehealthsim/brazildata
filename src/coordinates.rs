@@ -76,21 +76,32 @@ fn parse_direction_longitude(s: &str) -> Result<bool> {
 pub fn parse_coordinates(s: &str, altitude_meters: f64) -> Result<WGS84<f64>> {
     lazy_static! {
         static ref RE: Regex = Regex::new(
-            r#"^\s*(\d+)°\s*(\d+)['′]\s*(\d+)(?:″|"|'')\s*([NS])\s+(\d+)°\s*(\d+)['′]\s*(\d+)(?:″|"|'')\s*([EWO])\s*$"#
+            r#"^\s*(\d+)°\s*(\d+)['′](?:\s*(\d+)(?:″|"|''))?\s*([NS])\s+(\d+)°\s*(\d+)['′](?:\s*(\d+)(?:″|"|''))?\s*([EWO])\s*$"#
         ).unwrap();
         static ref RE2: Regex = Regex::new(
             r#"^\s*(\d+\.\d*)°([NS])\s+(\d+\.\d*)°([EWO])\s*$"#
         ).unwrap();
     }
     if let Some(cap) = RE.captures(s) {
+        assert_eq!(cap.len(), 9);
         let latitude_deg: u8 = cap[1].parse()?;
         let latitude_min: u8 = cap[2].parse()?;
-        let latitude_sec: u8 = cap[3].parse()?;
+        let latitude_sec: u8 =
+            if let Some(c) = cap.get(3) {
+                c.as_str().parse()?
+            } else {
+                0
+            };
         let latitude_direction: &str = &cap[4];
 
         let longitude_deg: u8 = cap[5].parse()?;
         let longitude_min: u8 = cap[6].parse()?;
-        let longitude_sec: u8 = cap[7].parse()?;
+        let longitude_sec: u8 =
+            if let Some(c) = cap.get(7) {
+                c.as_str().parse()?
+            } else {
+                0
+            };
         let longitude_direction: &str = &cap[8];
 
         let lat = Coordinate::try_new(
