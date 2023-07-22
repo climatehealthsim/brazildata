@@ -26,12 +26,12 @@ fn multiple_index<'k,'v,
                   PK: 'k + Hash + Eq + Debug,
                   V: 'v + Debug>(
     vs: &'v [V],
-    key: impl Fn(&V) -> Option<K>,
+    key: impl Fn(&V) -> Result<Option<K>>,
     primary_key: impl Fn(&V) -> PK,
 ) -> Result<HashMap<K, HashMap<PK, &'v V>>> {
     let mut m: HashMap<K, HashMap<PK, &'v V>> = HashMap::new();
     for v in vs {
-        if let Some(k) = key(v) {
+        if let Some(k) = key(v)? {
             let pk = primary_key(v);
             if let Some(ind) = m.get_mut(&k) {
                 if let Some(old) = (*ind).insert(pk, v) {
@@ -485,14 +485,41 @@ pub struct StaticDatabase {
     pub municipalities_by_statename: HashMap<StateName<'static>, HashMap<MunicipalityName<'static>, &'static Municipality>>,
 }
 
+fn municipality_state(
+    state_by_statename: &HashMap<StateName<'static>, &'static State>,
+    state_by_capitalname: &HashMap<MunicipalityName<'static>, &'static State>,
+    municipality: &Municipality
+) -> Result<&'static State> {
+    if let Some(statename) = municipality.state {
+        state_by_statename.get(&statename).map(|v| *v).ok_or_else(
+            || anyhow!("unknown {statename:?}"))
+    } else {
+        state_by_capitalname.get(&municipality.name).map(|v| *v).ok_or_else(
+            || anyhow!(
+                "municipality is not a capital but does not have state field set: {:?}",
+                municipality.name))
+    }
+}
+
 impl StaticDatabase {
     pub fn get() -> Result<StaticDatabase> {
+        let state_by_statename = unique_index(STATES, |v| v.name)?;
+        let state_by_capitalname = unique_index(STATES, |v| v.capital)?;
+        let municipalities_by_statename = multiple_index(
+            MUNICIPALITIES,
+            |m| {
+                // Just using m.state would be wrong since this
+                // can have None, in which case we need to find
+                // the state from state_by_capitalname:
+                Ok(Some(municipality_state(&state_by_statename, &state_by_capitalname, m)?.name))
+            },
+            |m| m.name)?;
         Ok(StaticDatabase {
             region_by_regionname: unique_index(REGIONS, |v| v.name)?,
             municipality_by_municipalityname: unique_index(MUNICIPALITIES, |v| v.name)?,
-            state_by_statename: unique_index(STATES, |v| v.name)?,
-            state_by_capitalname: unique_index(STATES, |v| v.capital)?,
-            municipalities_by_statename: multiple_index(MUNICIPALITIES, |m| m.state, |m| m.name)?,
+            state_by_statename,
+            state_by_capitalname,
+            municipalities_by_statename,
         })
     }
     #[allow(unused)]
@@ -502,6 +529,7 @@ impl StaticDatabase {
     pub fn get_municipality(&self, key: MunicipalityName) -> Option<&Municipality> {
         self.municipality_by_municipalityname.get(&key).map(|v| *v)
     }
+    #[allow(unused)]
     pub fn get_state(&self, key: StateName) -> Option<&State> {
         self.state_by_statename.get(&key).map(|v| *v)
     }
@@ -512,15 +540,7 @@ impl StaticDatabase {
         self.get_state_by_capital(municipality.name)
     }
     pub fn municipality_state(&self, municipality: &Municipality) -> Result<&State> {
-        if let Some(statename) = municipality.state {
-            self.get_state(statename).ok_or_else(
-                || anyhow!("unknown {statename:?}"))
-        } else {
-            self.municipality_opt_capital_of_state(municipality).ok_or_else(
-                || anyhow!(
-                    "municipality is not a capital but does not have state field set: {:?}",
-                    municipality.name))
-        }
+        municipality_state(&self.state_by_statename, &self.state_by_capitalname, municipality)
     }
     pub fn municipality_is_notification_capital(&self, municipality: &Municipality) -> Result<bool> {
         if let Some(state) = self.state_by_capitalname.get(&municipality.name) {
