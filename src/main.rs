@@ -123,7 +123,7 @@ fn main() -> Result<()> {
         }
     }
 
-    for (_, municipality) in sdb.municipalities {
+    for (_, municipality) in sdb.municipality_by_municipalityname {
         if let Some(coord) = municipality.coordinates {
             let c = parse_coordinates(coord, 0.)?;
             println!("Municipality {:?} is at {},{} ({c:?})", municipality.name.0,

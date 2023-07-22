@@ -451,33 +451,33 @@ const MUNICIPALITIES: &[Municipality] = &[
 // -----------------------------------------------------------------------------
 
 pub struct StaticDatabase {
-    pub regions: HashMap<RegionName<'static>, &'static Region>,
-    pub municipalities: HashMap<MunicipalityName<'static>, &'static Municipality>,
-    pub states: HashMap<StateName<'static>, &'static State>,
-    pub states_by_capital: HashMap<MunicipalityName<'static>, &'static State>,
+    pub region_by_regionname: HashMap<RegionName<'static>, &'static Region>,
+    pub municipality_by_municipalityname: HashMap<MunicipalityName<'static>, &'static Municipality>,
+    pub state_by_statename: HashMap<StateName<'static>, &'static State>,
+    pub state_by_capitalname: HashMap<MunicipalityName<'static>, &'static State>,
 }
 
 impl StaticDatabase {
     pub fn get() -> Result<StaticDatabase> {
         Ok(StaticDatabase {
-            regions: primary_index(REGIONS, |v| v.name)?,
-            municipalities: primary_index(MUNICIPALITIES, |v| v.name)?,
-            states: primary_index(STATES, |v| v.name)?,
-            states_by_capital: primary_index(STATES, |v| v.capital)?,
+            region_by_regionname: primary_index(REGIONS, |v| v.name)?,
+            municipality_by_municipalityname: primary_index(MUNICIPALITIES, |v| v.name)?,
+            state_by_statename: primary_index(STATES, |v| v.name)?,
+            state_by_capitalname: primary_index(STATES, |v| v.capital)?,
         })
     }
     #[allow(unused)]
     pub fn get_region(&self, key: RegionName) -> Option<&Region> {
-        self.regions.get(&key).map(|v| *v)
+        self.region_by_regionname.get(&key).map(|v| *v)
     }
     pub fn get_municipality(&self, key: MunicipalityName) -> Option<&Municipality> {
-        self.municipalities.get(&key).map(|v| *v)
+        self.municipality_by_municipalityname.get(&key).map(|v| *v)
     }
     pub fn get_state(&self, key: StateName) -> Option<&State> {
-        self.states.get(&key).map(|v| *v)
+        self.state_by_statename.get(&key).map(|v| *v)
     }
     pub fn get_state_by_capital(&self, key: MunicipalityName) -> Option<&State> {
-        self.states_by_capital.get(&key).map(|v| *v)
+        self.state_by_capitalname.get(&key).map(|v| *v)
     }
     pub fn municipality_opt_capital_of_state(&self, municipality: &Municipality) -> Option<&State> {
         self.get_state_by_capital(municipality.name)
@@ -494,7 +494,7 @@ impl StaticDatabase {
         }
     }
     pub fn municipality_is_notification_capital(&self, municipality: &Municipality) -> Result<bool> {
-        if let Some(state) = self.states_by_capital.get(&municipality.name) {
+        if let Some(state) = self.state_by_capitalname.get(&municipality.name) {
             if let Some(municipality_state) = municipality.state {
                 if municipality_state == state.name {
                     println!("NOTE: {:?} unnecessarily lists the state {:?} in its state field, it's known from the registration in the state already",
