@@ -24,7 +24,7 @@ use crate::recent5::RecentTable5;
 use crate::recent6::RecentTable6;
 use crate::recent7::RecentTable7;
 use crate::recent8::RecentTable8;
-use crate::staticdatabase::{StaticDatabase, MunicipalityName};
+use crate::staticdatabase::{StaticDatabase, MunicipalityName, StateName};
 use crate::easycsv::optionfmt;
 use crate::util::{capitals_from_table, CapitalDeNotificacao, RecentTable};
 
@@ -131,7 +131,9 @@ fn main() -> Result<()> {
         }
     }
 
-    // cases_by_municipalityname
+    for (_, municipality) in sdb.municipalities_by_statename(StateName("Acre"))? {
+        
+    }
     
     println!("===OK===");
     Ok(())

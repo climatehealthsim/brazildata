@@ -5,7 +5,7 @@ use anyhow::{Result, anyhow, bail};
 // -----------------------------------------------------------------------------
 // Utils
 
-fn primary_index<'k,'v,
+fn unique_index<'k,'v,
                  K: 'k + Hash + Eq + Debug,
                  V: 'v + Debug>(
     vs: &'v [V],
@@ -16,6 +16,33 @@ fn primary_index<'k,'v,
         if let Some(old) = m.insert(key(v), v) {
             let k = key(v);
             bail!("duplicate entry for key {k:?}: {old:?} <-> {v:?}")
+        }
+    }
+    Ok(m)
+}
+
+fn multiple_index<'k,'v,
+                  K: 'k + Hash + Eq + Debug,
+                  PK: 'k + Hash + Eq + Debug,
+                  V: 'v + Debug>(
+    vs: &'v [V],
+    key: impl Fn(&V) -> Option<K>,
+    primary_key: impl Fn(&V) -> PK,
+) -> Result<HashMap<K, HashMap<PK, &'v V>>> {
+    let mut m: HashMap<K, HashMap<PK, &'v V>> = HashMap::new();
+    for v in vs {
+        if let Some(k) = key(v) {
+            let pk = primary_key(v);
+            if let Some(ind) = m.get_mut(&k) {
+                if let Some(old) = (*ind).insert(pk, v) {
+                    let k = key(v);
+                    bail!("duplicate entry for primary key {k:?}: {old:?} <-> {v:?}")
+                }
+            } else {
+                let mut ind = HashMap::new();
+                ind.insert(pk, v);
+                m.insert(k, ind);
+            }
         }
     }
     Ok(m)
@@ -455,15 +482,17 @@ pub struct StaticDatabase {
     pub municipality_by_municipalityname: HashMap<MunicipalityName<'static>, &'static Municipality>,
     pub state_by_statename: HashMap<StateName<'static>, &'static State>,
     pub state_by_capitalname: HashMap<MunicipalityName<'static>, &'static State>,
+    pub municipalities_by_statename: HashMap<StateName<'static>, HashMap<MunicipalityName<'static>, &'static Municipality>>,
 }
 
 impl StaticDatabase {
     pub fn get() -> Result<StaticDatabase> {
         Ok(StaticDatabase {
-            region_by_regionname: primary_index(REGIONS, |v| v.name)?,
-            municipality_by_municipalityname: primary_index(MUNICIPALITIES, |v| v.name)?,
-            state_by_statename: primary_index(STATES, |v| v.name)?,
-            state_by_capitalname: primary_index(STATES, |v| v.capital)?,
+            region_by_regionname: unique_index(REGIONS, |v| v.name)?,
+            municipality_by_municipalityname: unique_index(MUNICIPALITIES, |v| v.name)?,
+            state_by_statename: unique_index(STATES, |v| v.name)?,
+            state_by_capitalname: unique_index(STATES, |v| v.capital)?,
+            municipalities_by_statename: multiple_index(MUNICIPALITIES, |m| m.state, |m| m.name)?,
         })
     }
     #[allow(unused)]
@@ -510,6 +539,12 @@ impl StaticDatabase {
         }  else {
             Ok(false)
         }
+    }
+    pub fn municipalities_in_state<'s>(
+        &'s self, statename: StateName<'s>
+    ) -> Result<&HashMap<MunicipalityName<'static>, &'static Municipality>> {
+        self.municipalities_by_statename.get(&statename).ok_or_else(
+            || anyhow!("no munipalities in state {statename:?}"))
     }
 
     pub fn check(&self) -> Result<()> {
