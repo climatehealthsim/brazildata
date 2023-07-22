@@ -367,6 +367,23 @@ const CITIES: &[City] = &[
         name: CityName("Boa Vista"),
         state: None,
     },
+
+    // https://en.wikipedia.org/wiki/Cruzeiro_do_Sul
+    // Cruzeiro do Sul, Acre, a town in the state of Acre, Brazil
+    // Cruzeiro do Sul, Paraná, a town in the state of Paraná, Brazil
+    // Cruzeiro do Sul, Rio Grande do Sul, a town in the state of Rio Grande do Sul, Brazil 
+    City {
+        name: CityName("Cruzeiro do Sul, Acre"),
+        state: Some(StateName("Acre")),
+    },
+    City {
+        name: CityName("Cruzeiro do Sul, Paraná"),
+        state: Some(StateName("Paraná")),
+    },
+    City {
+        name: CityName("Cruzeiro do Sul, Rio Grande do Sul"),
+        state: Some(StateName("Rio Grande do Sul")),
+    },
 ];
 
 // -----------------------------------------------------------------------------
