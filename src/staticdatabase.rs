@@ -256,116 +256,144 @@ pub struct CityName<'t>(pub &'t str);
 pub struct City {
     pub name: CityName<'static>,
     pub state: Option<StateName<'static>>, // if not clear from State's info
+    pub coordinates: Option<&'static str>,
 }
 
 const CITIES: &[City] = &[
     City {
         name: CityName("São Paulo"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Rio Branco"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Recife"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Curitiba"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Belém"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Salvador"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Rio de Janeiro"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Maceió"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Fortaleza"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Manaus"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Macapá"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Brasília"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Florianópolis"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Aracaju"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Vitória"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Belo Horizonte"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("São Luís"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("João Pessoa"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Natal"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Porto Velho"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Porto Alegre"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Campo Grande"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Goiânia"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Cuiabá"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Teresina"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Palmas"),
         state: None,
+        coordinates: None,
     },
     City {
         name: CityName("Boa Vista"),
         state: None,
+        coordinates: None,
     },
 
     // https://en.wikipedia.org/wiki/Cruzeiro_do_Sul
@@ -375,24 +403,33 @@ const CITIES: &[City] = &[
     City {
         name: CityName("Cruzeiro do Sul, Acre"),
         state: Some(StateName("Acre")),
+        // population 2020 est. 89,072
+        // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Acre)
+        // population 2021 89 760
+        coordinates: Some(r#"7° 37' 51" S 72° 40' 12" O"#),
     },
     City {
         name: CityName("Cruzeiro do Sul, Paraná"),
         state: Some(StateName("Paraná")),
+        // population 2020 est. 4,449
+        coordinates: Some("22.961944°S 52.160833°W"),
     },
     City {
         name: CityName("Cruzeiro do Sul, Rio Grande do Sul"),
         state: Some(StateName("Rio Grande do Sul")),
+        // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Rio_Grande_do_Sul)
+        // population 2021: 12 457
+        coordinates: Some(r#"29° 30' 46" S 51° 59' 06" O"#),
     },
 ];
 
 // -----------------------------------------------------------------------------
 
 pub struct StaticDatabase {
-    regions: HashMap<RegionName<'static>, &'static Region>,
-    cities: HashMap<CityName<'static>, &'static City>,
-    states: HashMap<StateName<'static>, &'static State>,
-    states_by_capital: HashMap<CityName<'static>, &'static State>,
+    pub regions: HashMap<RegionName<'static>, &'static Region>,
+    pub cities: HashMap<CityName<'static>, &'static City>,
+    pub states: HashMap<StateName<'static>, &'static State>,
+    pub states_by_capital: HashMap<CityName<'static>, &'static State>,
 }
 
 impl StaticDatabase {

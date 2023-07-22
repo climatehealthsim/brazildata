@@ -119,10 +119,13 @@ fn main() -> Result<()> {
         }
     }
 
-    let c = parse_coordinates(r#"7° 37' 51" S 72° 40' 12" O"#, 0.)?;
-    println!("{c:?}");
-    println!("{},{}", c.latitude_degrees(), c.longitude_degrees());
-    
+    for (_, city) in sdb.cities {
+        if let Some(coord) = city.coordinates {
+            let c = parse_coordinates(coord, 0.)?;
+            println!("City {:?} is at {},{} ({c:?})", city.name.0,
+                     c.latitude_degrees(), c.longitude_degrees());
+        }
+    }
     
     println!("===OK===");
     Ok(())
