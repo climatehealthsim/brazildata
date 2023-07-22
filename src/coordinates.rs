@@ -78,6 +78,9 @@ pub fn parse_coordinates(s: &str, altitude_meters: f64) -> Result<WGS84<f64>> {
         static ref RE: Regex = Regex::new(
             r#"^\s*(\d+)°\s*(\d+)['′]\s*(\d+)(?:″|"|'')\s*([NS])\s+(\d+)°\s*(\d+)['′]\s*(\d+)(?:″|"|'')\s*([EWO])\s*$"#
         ).unwrap();
+        static ref RE2: Regex = Regex::new(
+            r#"^\s*(\d+\.\d*)°([NS])\s+(\d+\.\d*)°([EWO])\s*$"#
+        ).unwrap();
     }
     if let Some(cap) = RE.captures(s) {
         let latitude_deg: u8 = cap[1].parse()?;
@@ -105,6 +108,24 @@ pub fn parse_coordinates(s: &str, altitude_meters: f64) -> Result<WGS84<f64>> {
             longitude_sec
         )?;
         Ok(WGS84::from_degrees_and_meters(lat.into(), lon.into(), altitude_meters))
+    } else if let Some(cap) = RE2.captures(s) {
+        let latitude: f64 = cap[1].parse()?;
+        let latitude_direction: &str = &cap[2];
+        let longitude: f64 = cap[3].parse()?;
+        let longitude_direction: &str = &cap[4];
+        let lat =
+            if parse_direction_latitude(latitude_direction)? {
+                -latitude
+            } else {
+                latitude
+            };
+        let lon =
+            if parse_direction_longitude(longitude_direction)? {
+                -longitude
+            } else {
+                longitude
+            };
+        Ok(WGS84::from_degrees_and_meters(lat, lon, altitude_meters))
     } else {
         bail!("string does not match coordinates format: {s:?}")
     }
