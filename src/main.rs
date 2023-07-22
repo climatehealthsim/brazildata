@@ -23,7 +23,7 @@ use crate::recent5::RecentTable5;
 use crate::recent6::RecentTable6;
 use crate::recent7::RecentTable7;
 use crate::recent8::RecentTable8;
-use crate::staticdatabase::{StaticDatabase, CityName};
+use crate::staticdatabase::{StaticDatabase, MunicipalityName};
 use crate::easycsv::optionfmt;
 use crate::util::{capitals_from_table, CapitalDeNotificacao, RecentTable};
 
@@ -99,30 +99,30 @@ fn main() -> Result<()> {
 
     let sdb = StaticDatabase::get()?;
     sdb.check()?;
-    for cityname_str in c1 {
-        let cityname = CityName(cityname_str);
-        if let Some(city) = sdb.get_city(cityname) {
-            // dbg!(city);
+    for municipalityname_str in c1 {
+        let municipalityname = MunicipalityName(municipalityname_str);
+        if let Some(municipality) = sdb.get_municipality(municipalityname) {
+            // dbg!(municipality);
             let is_capital =
-                if let Some(state) = sdb.city_opt_capital_of_state(city) {
-                    println!("City is state capital of: {:?} {:?}",
-                             city.name, state.name);
+                if let Some(state) = sdb.municipality_opt_capital_of_state(municipality) {
+                    println!("Municipality is state capital of: {:?} {:?}",
+                             municipality.name, state.name);
                     true
                 } else {
-                    println!("City is not a state capital: {:?}",
-                             city.name);
+                    println!("Municipality is not a state capital: {:?}",
+                             municipality.name);
                     false
                 };
-            assert_eq!(is_capital, sdb.city_is_notification_capital(&city)?);
+            assert_eq!(is_capital, sdb.municipality_is_notification_capital(&municipality)?);
         } else {
-            println!("WARNING: unknown {cityname:?}");
+            println!("WARNING: unknown {municipalityname:?}");
         }
     }
 
-    for (_, city) in sdb.cities {
-        if let Some(coord) = city.coordinates {
+    for (_, municipality) in sdb.municipalities {
+        if let Some(coord) = municipality.coordinates {
             let c = parse_coordinates(coord, 0.)?;
-            println!("City {:?} is at {},{} ({c:?})", city.name.0,
+            println!("Municipality {:?} is at {},{} ({c:?})", municipality.name.0,
                      c.latitude_degrees(), c.longitude_degrees());
         }
     }

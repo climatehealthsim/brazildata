@@ -30,29 +30,29 @@ pub struct RegionName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct Region {
     pub name: RegionName<'static>,
-    pub most_populous_municipality: CityName<'static>,
+    pub most_populous_municipality: MunicipalityName<'static>,
 }
 
 const REGIONS: &[Region] = &[
     Region {
         name: RegionName("Norte"),
-        most_populous_municipality: CityName("Manaus"),
+        most_populous_municipality: MunicipalityName("Manaus"),
     },
     Region {
         name: RegionName("Nordeste"),
-        most_populous_municipality: CityName("Salvador"),
+        most_populous_municipality: MunicipalityName("Salvador"),
     },
     Region {
         name: RegionName("Sudeste"),
-        most_populous_municipality: CityName("São Paulo"),
+        most_populous_municipality: MunicipalityName("São Paulo"),
     },
     Region {
         name: RegionName("Sul"),
-        most_populous_municipality: CityName("Curitiba"),
+        most_populous_municipality: MunicipalityName("Curitiba"),
     },
     Region {
         name: RegionName("Centro-oeste"),
-        most_populous_municipality: CityName("Brasília"),
+        most_populous_municipality: MunicipalityName("Brasília"),
     },
 ];
 
@@ -71,179 +71,179 @@ pub struct StateName<'t>(pub &'t str);
 #[derive(Debug)]
 pub struct State {
     pub name: StateName<'static>,
-    pub capital: CityName<'static>,
-    largest_city: Option<CityName<'static>>,
+    pub capital: MunicipalityName<'static>,
+    largest_municipality: Option<MunicipalityName<'static>>,
     pub region: RegionName<'static>,
 }
 
 impl State {
     #[allow(unused)]
-    pub fn largest_city(&self) -> CityName<'static> {
-        self.largest_city.or_else(|| Some(self.capital)).unwrap()
+    pub fn largest_municipality(&self) -> MunicipalityName<'static> {
+        self.largest_municipality.or_else(|| Some(self.capital)).unwrap()
     }
 }
 
 const STATES: &[State] = &[
     State {
         name: StateName("Acre"),
-        capital: CityName("Rio Branco"),
-        largest_city: None,
+        capital: MunicipalityName("Rio Branco"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Alagoas"),
-        capital: CityName("Maceió"),
-        largest_city: None,
+        capital: MunicipalityName("Maceió"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Amapá"),
-        capital: CityName("Macapá"),
-        largest_city: None,
+        capital: MunicipalityName("Macapá"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Amazonas"),
-        capital: CityName("Manaus"),
-        largest_city: None,
+        capital: MunicipalityName("Manaus"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Bahia"),
-        capital: CityName("Salvador"),
-        largest_city: None,
+        capital: MunicipalityName("Salvador"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Ceará"),
-        capital: CityName("Fortaleza"),
-        largest_city: None,
+        capital: MunicipalityName("Fortaleza"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Distrito Federal"),
-        capital: CityName("Brasília"),
-        largest_city: None,
+        capital: MunicipalityName("Brasília"),
+        largest_municipality: None,
         region: CENTRAL_WEST,
     },
     State {
         name: StateName("Espírito Santo"),
-        capital: CityName("Vitória"),
-        largest_city: Some(CityName("Serra")),
+        capital: MunicipalityName("Vitória"),
+        largest_municipality: Some(MunicipalityName("Serra")),
         region: SOUTHEAST,
     },
     State {
         name: StateName("Goiás"),
-        capital: CityName("Goiânia"),
-        largest_city: None,
+        capital: MunicipalityName("Goiânia"),
+        largest_municipality: None,
         region: CENTRAL_WEST,
     },
     State {
         name: StateName("Maranhão"),
-        capital: CityName("São Luís"),
-        largest_city: None,
+        capital: MunicipalityName("São Luís"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Mato Grosso"),
-        capital: CityName("Cuiabá"),
-        largest_city: None,
+        capital: MunicipalityName("Cuiabá"),
+        largest_municipality: None,
         region: CENTRAL_WEST,
     },
     State {
         name: StateName("Mato Grosso do Sul"),
-        capital: CityName("Campo Grande"),
-        largest_city: None,
+        capital: MunicipalityName("Campo Grande"),
+        largest_municipality: None,
         region: CENTRAL_WEST,
     },
     State {
         name: StateName("Minas Gerais"),
-        capital: CityName("Belo Horizonte"),
-        largest_city: None,
+        capital: MunicipalityName("Belo Horizonte"),
+        largest_municipality: None,
         region: SOUTHEAST,
     },
     State {
         name: StateName("Pará"),
-        capital: CityName("Belém"),
-        largest_city: None,
+        capital: MunicipalityName("Belém"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Paraíba"),
-        capital: CityName("João Pessoa"),
-        largest_city: None,
+        capital: MunicipalityName("João Pessoa"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Paraná"),
-        capital: CityName("Curitiba"),
-        largest_city: None,
+        capital: MunicipalityName("Curitiba"),
+        largest_municipality: None,
         region: SOUTH,
     },
     State {
         name: StateName("Pernambuco"),
-        capital: CityName("Recife"),
-        largest_city: None,
+        capital: MunicipalityName("Recife"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Piauí"),
-        capital: CityName("Teresina"),
-        largest_city: None,
+        capital: MunicipalityName("Teresina"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Rio de Janeiro"),
-        capital: CityName("Rio de Janeiro"),
-        largest_city: None,
+        capital: MunicipalityName("Rio de Janeiro"),
+        largest_municipality: None,
         region: SOUTHEAST,
     },
     State {
         name: StateName("Rio Grande do Norte"),
-        capital: CityName("Natal"),
-        largest_city: None,
+        capital: MunicipalityName("Natal"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Rio Grande do Sul"),
-        capital: CityName("Porto Alegre"),
-        largest_city: None,
+        capital: MunicipalityName("Porto Alegre"),
+        largest_municipality: None,
         region: SOUTH,
     },
     State {
         name: StateName("Rondônia"),
-        capital: CityName("Porto Velho"),
-        largest_city: None,
+        capital: MunicipalityName("Porto Velho"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Roraima"),
-        capital: CityName("Boa Vista"),
-        largest_city: None,
+        capital: MunicipalityName("Boa Vista"),
+        largest_municipality: None,
         region: NORTH,
     },
     State {
         name: StateName("Santa Catarina"),
-        capital: CityName("Florianópolis"),
-        largest_city: Some(CityName("Joinville")),
+        capital: MunicipalityName("Florianópolis"),
+        largest_municipality: Some(MunicipalityName("Joinville")),
         region: SOUTH,
     },
     State {
         name: StateName("São Paulo"),
-        capital: CityName("São Paulo"),
-        largest_city: None,
+        capital: MunicipalityName("São Paulo"),
+        largest_municipality: None,
         region: SOUTHEAST,
     },
     State {
         name: StateName("Sergipe"),
-        capital: CityName("Aracaju"),
-        largest_city: None,
+        capital: MunicipalityName("Aracaju"),
+        largest_municipality: None,
         region: NORTHEAST,
     },
     State {
         name: StateName("Tocantins"),
-        capital: CityName("Palmas"),
-        largest_city: None,
+        capital: MunicipalityName("Palmas"),
+        largest_municipality: None,
         region: NORTH,
     },
 ];
@@ -251,154 +251,154 @@ const STATES: &[State] = &[
 // -----------------------------------------------------------------------------
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub struct CityName<'t>(pub &'t str);
+pub struct MunicipalityName<'t>(pub &'t str);
 #[derive(Debug)]
-pub struct City {
-    pub name: CityName<'static>,
+pub struct Municipality {
+    pub name: MunicipalityName<'static>,
     pub state: Option<StateName<'static>>, // if not clear from State's info
     pub coordinates: Option<&'static str>,
 }
 
-const CITIES: &[City] = &[
-    City {
-        name: CityName("São Paulo"),
+const MUNICIPALITIES: &[Municipality] = &[
+    Municipality {
+        name: MunicipalityName("São Paulo"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Rio Branco"),
+    Municipality {
+        name: MunicipalityName("Rio Branco"),
         state: None, // Acre
         coordinates: None,
     },
-    City {
-        name: CityName("Rio Branco, Mato Grosso"),
+    Municipality {
+        name: MunicipalityName("Rio Branco, Mato Grosso"),
         state: Some(StateName("Mato Grosso")),
         coordinates: Some("15.2408°S 58.1158°W"),
         // pop 2020  5 150
     },
     // Rio Branco, Rio Grande do Sul = neighbourhood, not municipality
-    City {
-        name: CityName("Recife"),
+    Municipality {
+        name: MunicipalityName("Recife"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Curitiba"),
+    Municipality {
+        name: MunicipalityName("Curitiba"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Belém"),
+    Municipality {
+        name: MunicipalityName("Belém"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Salvador"),
+    Municipality {
+        name: MunicipalityName("Salvador"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Rio de Janeiro"),
+    Municipality {
+        name: MunicipalityName("Rio de Janeiro"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Maceió"),
+    Municipality {
+        name: MunicipalityName("Maceió"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Fortaleza"),
+    Municipality {
+        name: MunicipalityName("Fortaleza"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Manaus"),
+    Municipality {
+        name: MunicipalityName("Manaus"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Macapá"),
+    Municipality {
+        name: MunicipalityName("Macapá"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Brasília"),
+    Municipality {
+        name: MunicipalityName("Brasília"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Florianópolis"),
+    Municipality {
+        name: MunicipalityName("Florianópolis"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Aracaju"),
+    Municipality {
+        name: MunicipalityName("Aracaju"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Vitória"),
+    Municipality {
+        name: MunicipalityName("Vitória"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Belo Horizonte"),
+    Municipality {
+        name: MunicipalityName("Belo Horizonte"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("São Luís"),
+    Municipality {
+        name: MunicipalityName("São Luís"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("João Pessoa"),
+    Municipality {
+        name: MunicipalityName("João Pessoa"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Natal"),
+    Municipality {
+        name: MunicipalityName("Natal"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Porto Velho"),
+    Municipality {
+        name: MunicipalityName("Porto Velho"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Porto Alegre"),
+    Municipality {
+        name: MunicipalityName("Porto Alegre"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Campo Grande"),
+    Municipality {
+        name: MunicipalityName("Campo Grande"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Goiânia"),
+    Municipality {
+        name: MunicipalityName("Goiânia"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Cuiabá"),
+    Municipality {
+        name: MunicipalityName("Cuiabá"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Teresina"),
+    Municipality {
+        name: MunicipalityName("Teresina"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Palmas"),
+    Municipality {
+        name: MunicipalityName("Palmas"),
         state: None,
         coordinates: None,
     },
-    City {
-        name: CityName("Boa Vista"),
+    Municipality {
+        name: MunicipalityName("Boa Vista"),
         state: None,
         coordinates: None,
     },
@@ -407,42 +407,42 @@ const CITIES: &[City] = &[
     // Cruzeiro do Sul, Acre, a town in the state of Acre, Brazil
     // Cruzeiro do Sul, Paraná, a town in the state of Paraná, Brazil
     // Cruzeiro do Sul, Rio Grande do Sul, a town in the state of Rio Grande do Sul, Brazil 
-    City {
-        name: CityName("Cruzeiro do Sul"), // , Acre
+    Municipality {
+        name: MunicipalityName("Cruzeiro do Sul"), // , Acre
         state: Some(StateName("Acre")),
         // population 2020 est. 89,072
         // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Acre)
         // population 2021 89 760
         coordinates: Some(r#"7° 37' 51" S 72° 40' 12" O"#),
     },
-    City {
-        name: CityName("Cruzeiro do Sul, Paraná"),
+    Municipality {
+        name: MunicipalityName("Cruzeiro do Sul, Paraná"),
         state: Some(StateName("Paraná")),
         // population 2020 est. 4,449
         coordinates: Some("22.961944°S 52.160833°W"),
     },
-    City {
-        name: CityName("Cruzeiro do Sul, Rio Grande do Sul"),
+    Municipality {
+        name: MunicipalityName("Cruzeiro do Sul, Rio Grande do Sul"),
         state: Some(StateName("Rio Grande do Sul")),
         // https://pt.wikipedia.org/wiki/Cruzeiro_do_Sul_(Rio_Grande_do_Sul)
         // population 2021: 12 457
         coordinates: Some(r#"29° 30' 46" S 51° 59' 06" O"#),
     },
 
-    City {
-        name: CityName("Tarauacá"),
+    Municipality {
+        name: MunicipalityName("Tarauacá"),
         state: Some(StateName("Acre")),
         coordinates: Some("08°09′39″S 70°45′57″W"),
         // pop 2020 43,151
     },
-    City {
-        name: CityName("Sena Madureira"),
+    Municipality {
+        name: MunicipalityName("Sena Madureira"),
         state: Some(StateName("Acre")),
         coordinates: Some("09°03′57″S 68°39′25″W"),
         // pop 2020 46,511
     },
-    City {
-        name: CityName("Brasileia"),
+    Municipality {
+        name: MunicipalityName("Brasileia"),
         state: Some(StateName("Acre")),
         coordinates: Some("11°00′S 68°44′W"),
     },
@@ -452,16 +452,16 @@ const CITIES: &[City] = &[
 
 pub struct StaticDatabase {
     pub regions: HashMap<RegionName<'static>, &'static Region>,
-    pub cities: HashMap<CityName<'static>, &'static City>,
+    pub municipalities: HashMap<MunicipalityName<'static>, &'static Municipality>,
     pub states: HashMap<StateName<'static>, &'static State>,
-    pub states_by_capital: HashMap<CityName<'static>, &'static State>,
+    pub states_by_capital: HashMap<MunicipalityName<'static>, &'static State>,
 }
 
 impl StaticDatabase {
     pub fn get() -> Result<StaticDatabase> {
         Ok(StaticDatabase {
             regions: primary_index(REGIONS, |v| v.name)?,
-            cities: primary_index(CITIES, |v| v.name)?,
+            municipalities: primary_index(MUNICIPALITIES, |v| v.name)?,
             states: primary_index(STATES, |v| v.name)?,
             states_by_capital: primary_index(STATES, |v| v.capital)?,
         })
@@ -470,39 +470,39 @@ impl StaticDatabase {
     pub fn get_region(&self, key: RegionName) -> Option<&Region> {
         self.regions.get(&key).map(|v| *v)
     }
-    pub fn get_city(&self, key: CityName) -> Option<&City> {
-        self.cities.get(&key).map(|v| *v)
+    pub fn get_municipality(&self, key: MunicipalityName) -> Option<&Municipality> {
+        self.municipalities.get(&key).map(|v| *v)
     }
     pub fn get_state(&self, key: StateName) -> Option<&State> {
         self.states.get(&key).map(|v| *v)
     }
-    pub fn get_state_by_capital(&self, key: CityName) -> Option<&State> {
+    pub fn get_state_by_capital(&self, key: MunicipalityName) -> Option<&State> {
         self.states_by_capital.get(&key).map(|v| *v)
     }
-    pub fn city_opt_capital_of_state(&self, city: &City) -> Option<&State> {
-        self.get_state_by_capital(city.name)
+    pub fn municipality_opt_capital_of_state(&self, municipality: &Municipality) -> Option<&State> {
+        self.get_state_by_capital(municipality.name)
     }
-    pub fn city_state(&self, city: &City) -> Result<&State> {
-        if let Some(statename) = city.state {
+    pub fn municipality_state(&self, municipality: &Municipality) -> Result<&State> {
+        if let Some(statename) = municipality.state {
             self.get_state(statename).ok_or_else(
                 || anyhow!("unknown {statename:?}"))
         } else {
-            self.city_opt_capital_of_state(city).ok_or_else(
+            self.municipality_opt_capital_of_state(municipality).ok_or_else(
                 || anyhow!(
-                    "city is not a capital but does not have state field set: {:?}",
-                    city.name))
+                    "municipality is not a capital but does not have state field set: {:?}",
+                    municipality.name))
         }
     }
-    pub fn city_is_notification_capital(&self, city: &City) -> Result<bool> {
-        if let Some(state) = self.states_by_capital.get(&city.name) {
-            if let Some(city_state) = city.state {
-                if city_state == state.name {
+    pub fn municipality_is_notification_capital(&self, municipality: &Municipality) -> Result<bool> {
+        if let Some(state) = self.states_by_capital.get(&municipality.name) {
+            if let Some(municipality_state) = municipality.state {
+                if municipality_state == state.name {
                     println!("NOTE: {:?} unnecessarily lists the state {:?} in its state field, it's known from the registration in the state already",
-                             city.name, state.name);
+                             municipality.name, state.name);
                     Ok(true)
                 } else {
-                    bail!("{:?} is registered as the capital for {state:?}, but the city itself lists {city_state:?} as the state",
-                          city.name)
+                    bail!("{:?} is registered as the capital for {state:?}, but the municipality itself lists {municipality_state:?} as the state",
+                          municipality.name)
                 }
             } else {
                 Ok(true)
@@ -513,8 +513,8 @@ impl StaticDatabase {
     }
 
     pub fn check(&self) -> Result<()> {
-        for city in CITIES {
-            self.city_state(city)?;
+        for municipality in MUNICIPALITIES {
+            self.municipality_state(municipality)?;
         }
         Ok(())
     }
