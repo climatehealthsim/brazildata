@@ -26,23 +26,22 @@ fn multiple_index<'k,'v,
                   PK: 'k + Hash + Eq + Debug,
                   V: 'v + Debug>(
     vs: &'v [V],
-    key: impl Fn(&V) -> Result<Option<K>>,
+    key: impl Fn(&V) -> Result<K>,
     primary_key: impl Fn(&V) -> PK,
 ) -> Result<HashMap<K, HashMap<PK, &'v V>>> {
     let mut m: HashMap<K, HashMap<PK, &'v V>> = HashMap::new();
     for v in vs {
-        if let Some(k) = key(v)? {
-            let pk = primary_key(v);
-            if let Some(ind) = m.get_mut(&k) {
-                if let Some(old) = (*ind).insert(pk, v) {
-                    let k = key(v);
-                    bail!("duplicate entry for primary key {k:?}: {old:?} <-> {v:?}")
-                }
-            } else {
-                let mut ind = HashMap::new();
-                ind.insert(pk, v);
-                m.insert(k, ind);
+        let k = key(v)?;
+        let pk = primary_key(v);
+        if let Some(ind) = m.get_mut(&k) {
+            if let Some(old) = (*ind).insert(pk, v) {
+                let k = key(v);
+                bail!("duplicate entry for primary key {k:?}: {old:?} <-> {v:?}")
             }
+        } else {
+            let mut ind = HashMap::new();
+            ind.insert(pk, v);
+            m.insert(k, ind);
         }
     }
     Ok(m)
@@ -511,7 +510,7 @@ impl StaticDatabase {
                 // Just using m.state would be wrong since this
                 // can have None, in which case we need to find
                 // the state from state_by_capitalname:
-                Ok(Some(municipality_state(&state_by_statename, &state_by_capitalname, m)?.name))
+                Ok(municipality_state(&state_by_statename, &state_by_capitalname, m)?.name)
             },
             |m| m.name)?;
         Ok(StaticDatabase {
