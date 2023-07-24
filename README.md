@@ -1,4 +1,4 @@
-# Statistical analysis of correlations between climate and infectious disease
+# Statistical analysis of correlations between climate changes and infectious disease
 
 This is an ongoing research effort looking at correlations between
 climate parameters like precipitation and the incidence of
@@ -21,7 +21,7 @@ Silvio José de Queiroz from 2017.
 
 The Rust programming language is used in an experiment to informally
 evaluate its suitability for this kind of data research. Anticipated
-advantages are preventing mistakes due to the ease of liberal use of
+advantages are preventing mistakes thanks to the ease of liberal use of
 explicit data typing, and speed of evaluation which may favor advanced
 analysis techniques. Also, this work may be partially reused in or
 grown into a more general simulation application around climate data,
