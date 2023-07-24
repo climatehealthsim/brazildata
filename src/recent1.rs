@@ -15,7 +15,7 @@ pub struct RecentRecord1 {
     pub trabalho: u64,
     pub lazer: u64,
     pub outro: u64,
-    pub total: u64,
+    pub total: u64, // XX: what does this represent?
 }
 
 impl RecentRecord1 {
