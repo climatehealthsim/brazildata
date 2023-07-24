@@ -13,11 +13,13 @@ is ongoing to add more data sets and do statistical analysis.
 Also included is a database of the Brazilian regions, states, state
 capitals and some other municipalities.
 
-This work re-evaluates and expands upon the dissertation
-"Environmental, Socioeconomic factors related to the distribution of
-human leptospirosis in Brazil" (Fatores ambientais e socioeconômicos
-relacionados à distribuição da leptospirose humana no Brasil) by
-Silvio José de Queiroz from 2017.
+This re-evaluates and expands upon the work of de Queiroz, S. J., & de
+Andrade, M. (2021), [Distribuição temporal da leptospirose nas
+macrorregiões brasileiras e sua relação com a
+pluviosidade](https://doi.org/10.36489/saudecoletiva.2018v8i45p893-898),
+Saúde Coletiva (Barueri), 8(45), 893–898. (Translated title:
+"Temporal distribution of leptospirosis in the Brazilian macro-regions
+and its relationship with rainfall".)
 
 The Rust programming language is used in an experiment to informally
 evaluate its suitability for this kind of data research. Anticipated
