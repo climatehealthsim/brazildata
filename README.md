@@ -45,5 +45,5 @@ This is an independent collaboration with the following contributors:
 
 Programming and statistic evaluation: Christian Jaeger <ch@christianjaeger.ch>
 
-Scientific guidance and support: Monica Andrade
+Scientific guidance and support: Monica de Andrade <mmonicandrade@gmail.com>, [UNIPAM](https://unipam.edu.br/).
 
