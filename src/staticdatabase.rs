@@ -5,12 +5,11 @@ use anyhow::{Result, anyhow, bail};
 // -----------------------------------------------------------------------------
 // Utils
 
-fn unique_index<'k,'v,
-                 K: 'k + Hash + Eq + Debug,
-                 V: 'v + Debug>(
-    vs: &'v [V],
+fn unique_index<K: Hash + Eq + Debug,
+                V: Debug>(
+    vs: &[V],
     key: impl Fn(&V) -> K,
-) -> Result<HashMap<K, &'v V>> {
+) -> Result<HashMap<K, &V>> {
     let mut m = HashMap::new();
     for v in vs {
         if let Some(old) = m.insert(key(v), v) {
@@ -21,15 +20,14 @@ fn unique_index<'k,'v,
     Ok(m)
 }
 
-fn multiple_index<'k,'v,
-                  K: 'k + Hash + Eq + Debug,
-                  PK: 'k + Hash + Eq + Debug,
-                  V: 'v + Debug>(
-    vs: &'v [V],
+fn multiple_index<K: Hash + Eq + Debug,
+                  PK: Hash + Eq + Debug,
+                  V: Debug>(
+    vs: &[V],
     key: impl Fn(&V) -> Result<K>,
     primary_key: impl Fn(&V) -> PK,
-) -> Result<HashMap<K, HashMap<PK, &'v V>>> {
-    let mut m: HashMap<K, HashMap<PK, &'v V>> = HashMap::new();
+) -> Result<HashMap<K, HashMap<PK, &V>>> {
+    let mut m: HashMap<K, HashMap<PK, &V>> = HashMap::new();
     for v in vs {
         let k = key(v)?;
         let pk = primary_key(v);
