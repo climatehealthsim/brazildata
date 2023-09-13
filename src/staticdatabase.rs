@@ -475,11 +475,17 @@ const MUNICIPALITIES: &[Municipality] = &[
 // -----------------------------------------------------------------------------
 
 pub struct StaticDatabase {
-    pub region_by_regionname: HashMap<RegionName<'static>, &'static Region>,
-    pub municipality_by_municipalityname: HashMap<MunicipalityName<'static>, &'static Municipality>,
-    pub state_by_statename: HashMap<StateName<'static>, &'static State>,
-    pub state_by_capitalname: HashMap<MunicipalityName<'static>, &'static State>,
-    pub municipalities_by_statename: HashMap<StateName<'static>, HashMap<MunicipalityName<'static>, &'static Municipality>>,
+    pub region_by_regionname: HashMap<RegionName<'static>,
+                                      &'static Region>,
+    pub municipality_by_municipalityname: HashMap<MunicipalityName<'static>,
+                                                  &'static Municipality>,
+    pub state_by_statename: HashMap<StateName<'static>,
+                                    &'static State>,
+    pub state_by_capitalname: HashMap<MunicipalityName<'static>,
+                                      &'static State>,
+    pub municipalities_by_statename: HashMap<StateName<'static>,
+                                             HashMap<MunicipalityName<'static>,
+                                                     &'static Municipality>>,
 }
 
 fn municipality_state(
@@ -493,7 +499,8 @@ fn municipality_state(
     } else {
         state_by_capitalname.get(&municipality.name).map(|v| *v).ok_or_else(
             || anyhow!(
-                "municipality is not a capital but does not have state field set: {:?}",
+                "municipality is not a capital but does not have state field set: \
+                 {:?}",
                 municipality.name))
     }
 }
@@ -508,12 +515,14 @@ impl StaticDatabase {
                 // Just using m.state would be wrong since this
                 // can have None, in which case we need to find
                 // the state from state_by_capitalname:
-                Ok(municipality_state(&state_by_statename, &state_by_capitalname, m)?.name)
+                Ok(municipality_state(&state_by_statename,
+                                      &state_by_capitalname, m)?.name)
             },
             |m| m.name)?;
         Ok(StaticDatabase {
             region_by_regionname: unique_index(REGIONS, |v| v.name)?,
-            municipality_by_municipalityname: unique_index(MUNICIPALITIES, |v| v.name)?,
+            municipality_by_municipalityname: unique_index(MUNICIPALITIES,
+                                                           |v| v.name)?,
             state_by_statename,
             state_by_capitalname,
             municipalities_by_statename,
@@ -533,21 +542,31 @@ impl StaticDatabase {
     pub fn get_state_by_capital(&self, key: MunicipalityName) -> Option<&State> {
         self.state_by_capitalname.get(&key).map(|v| *v)
     }
-    pub fn municipality_opt_capital_of_state(&self, municipality: &Municipality) -> Option<&State> {
+    pub fn municipality_opt_capital_of_state(&self, municipality: &Municipality)
+                                             -> Option<&State>
+    {
         self.get_state_by_capital(municipality.name)
     }
     pub fn municipality_state(&self, municipality: &Municipality) -> Result<&State> {
-        municipality_state(&self.state_by_statename, &self.state_by_capitalname, municipality)
+        municipality_state(&self.state_by_statename,
+                           &self.state_by_capitalname,
+                           municipality)
     }
-    pub fn municipality_is_notification_capital(&self, municipality: &Municipality) -> Result<bool> {
+    pub fn municipality_is_notification_capital(&self, municipality: &Municipality)
+                                                -> Result<bool>
+    {
         if let Some(state) = self.state_by_capitalname.get(&municipality.name) {
             if let Some(municipality_state) = municipality.state {
                 if municipality_state == state.name {
-                    println!("NOTE: {:?} unnecessarily lists the state {:?} in its state field, it's known from the registration in the state already",
+                    println!("NOTE: {:?} unnecessarily lists the state {:?} in its \
+                              state field, it's known from the registration in the \
+                              state already",
                              municipality.name, state.name);
                     Ok(true)
                 } else {
-                    bail!("{:?} is registered as the capital for {state:?}, but the municipality itself lists {municipality_state:?} as the state",
+                    bail!("{:?} is registered as the capital for {state:?}, but the \
+                           municipality itself lists {municipality_state:?} as the \
+                           state",
                           municipality.name)
                 }
             } else {
