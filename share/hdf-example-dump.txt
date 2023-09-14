@@ -1,0 +1,903 @@
+HDF5 "../tmp/ncei.noaa.gov/PERSIANN-CDR_v01r01_20230331_c20230707.nc" {
+GROUP "/" {
+   ATTRIBUTE "Conventions" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 6;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "CF-1.6"
+      }
+   }
+   ATTRIBUTE "Metadata_Conventions" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 62;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "CF-1.6,Unidata Dataset Discovery v1.0, NOAA CDR v1.0, GDS v2.0"
+      }
+   }
+   ATTRIBUTE "cdm_data_type" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 4;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Grid"
+      }
+   }
+   ATTRIBUTE "cdr_program" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 32;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "NOAA Climate Data Record Program"
+      }
+   }
+   ATTRIBUTE "cdr_variable" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 13;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "precipitation"
+      }
+   }
+   ATTRIBUTE "comment" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 100;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Daily PERSIANN-CDR precipitation estimates for long-term data record. [NOTE: v01r01 replaces v01r00]"
+      }
+   }
+   ATTRIBUTE "contributor_name" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 62;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Soroosh Sorooshian, Kuolin Hsu, Hamed Ashouri, Dan Braithwaite"
+      }
+   }
+   ATTRIBUTE "contributor_role" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 48;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "PrincipalInvestigator, Professor, Author, Author"
+      }
+   }
+   ATTRIBUTE "creator_email" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 16;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "dbraithw@uci.edu"
+      }
+   }
+   ATTRIBUTE "creator_name" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 15;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Dan Braithwaite"
+      }
+   }
+   ATTRIBUTE "creator_url" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 28;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "http://www.chrs.web.uci.edu/"
+      }
+   }
+   ATTRIBUTE "date_created" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 20;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "2023-07-07T18:22:19Z"
+      }
+   }
+   ATTRIBUTE "datetime" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 10;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "2023-03-31"
+      }
+   }
+   ATTRIBUTE "geospatial_lat_max" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 60
+      }
+   }
+   ATTRIBUTE "geospatial_lat_min" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): -60
+      }
+   }
+   ATTRIBUTE "geospatial_lat_resolution" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 0.25
+      }
+   }
+   ATTRIBUTE "geospatial_lat_units" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 13;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "degrees_north"
+      }
+   }
+   ATTRIBUTE "geospatial_lon_max" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 360
+      }
+   }
+   ATTRIBUTE "geospatial_lon_min" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 0
+      }
+   }
+   ATTRIBUTE "geospatial_lon_resolution" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 0.25
+      }
+   }
+   ATTRIBUTE "geospatial_lon_units" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 12;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "degrees_east"
+      }
+   }
+   ATTRIBUTE "id" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 41;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "PERSIANN-CDR_v01r01_20230331_c20230707.nc"
+      }
+   }
+   ATTRIBUTE "institution" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 96;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "UC-IRVINE/CHRS, Center for Hydrometeorology and Remote Sensing, University of California, Irvine"
+      }
+   }
+   ATTRIBUTE "keywords" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 42;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "EARTH SCIENCE > ATMOSPHERE > PRECIPITATION"
+      }
+   }
+   ATTRIBUTE "keywords_vocabulary" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 32;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "GCMD Keywords, Version 8.0.0.0.0"
+      }
+   }
+   ATTRIBUTE "license" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 37;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "No constraints on data access or use."
+      }
+   }
+   ATTRIBUTE "metadata_link" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 20;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "gov.noaa.ncdc:C00854"
+      }
+   }
+   ATTRIBUTE "naming_authority" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 13;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "gov.noaa.ncdc"
+      }
+   }
+   ATTRIBUTE "product_version" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 6;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "v01r01"
+      }
+   }
+   ATTRIBUTE "project" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 97;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Satellite Data Support for Hydrologic and Water Resources Planning and Management.  Sponsor: NOAA"
+      }
+   }
+   ATTRIBUTE "source" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 297;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "GRIDSAT-B1.2023.03.31.00.v02r01.nc,GRIDSAT-B1.2023.03.31.03.v02r01.nc,GRIDSAT-B1.2023.03.31.06.v02r01.nc,GRIDSAT-B1.2023.03.31.09.v02r01.nc,GRIDSAT-B1.2023.03.31.12.v02r01.nc,GRIDSAT-B1.2023.03.31.15.v02r01.nc,GRIDSAT-B1.2023.03.31.18.v02r01.nc,GRIDSAT-B1.2023.03.31.21.v02r01.nc,gpcpv23_m2303.bin"
+      }
+   }
+   ATTRIBUTE "spatial_resolution" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 12;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "0.25 degrees"
+      }
+   }
+   ATTRIBUTE "standard_name_vocabulary" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 46;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "CF Standard Name Table (v26, 08 November 2013)"
+      }
+   }
+   ATTRIBUTE "summary" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 116;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "Daily near global precipitation estimates at 0.25 deg resolution over 30-year record. [NOTE: v01r01 replaces v01r00]"
+      }
+   }
+   ATTRIBUTE "time_coverage_end" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 17;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "2023-03-31T23:59Z"
+      }
+   }
+   ATTRIBUTE "time_coverage_start" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 17;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "2023-03-31T00:00Z"
+      }
+   }
+   ATTRIBUTE "title" {
+      DATATYPE  H5T_STRING {
+         STRSIZE 161;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_ASCII;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "NOAA Climate Data Record (CDR) of Precipitation Estimation from Remotely Sensed Information using Artificial Neural Networks (PERSIANN-CDR), Version 1 Revision 1"
+      }
+   }
+   DATASET "lat" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 480 ) / ( 480 ) }
+      DATA 
+      ATTRIBUTE "CLASS" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 16;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "DIMENSION_SCALE"
+         }
+      }
+      ATTRIBUTE "NAME" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 4;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "lat"
+         }
+      }
+      ATTRIBUTE "REFERENCE_LIST" {
+         DATATYPE  H5T_COMPOUND {
+            H5T_REFERENCE { H5T_STD_REF_OBJECT } "dataset";
+            H5T_STD_I32LE "dimension";
+         }
+         DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+         DATA {
+         (0): {
+               DATASET 8395 "/lat_bnds",
+               0
+            },
+         (1): {
+               DATASET 8663 "/precipitation",
+               2
+            }
+         }
+      }
+      ATTRIBUTE "_Netcdf4Dimid" {
+         DATATYPE  H5T_STD_I32LE
+         DATASPACE  SCALAR
+         DATA {
+         (0): 1
+         }
+      }
+      ATTRIBUTE "bounds" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 8;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "lat_bnds"
+         }
+      }
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 8;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "latitude"
+         }
+      }
+      ATTRIBUTE "standard_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 8;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "latitude"
+         }
+      }
+      ATTRIBUTE "units" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 13;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "degrees_north"
+         }
+      }
+      ATTRIBUTE "valid_max" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): 60
+         }
+      }
+      ATTRIBUTE "valid_min" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): -60
+         }
+      }
+   }
+   DATASET "lat_bnds" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 480, 2 ) / ( 480, 2 ) }
+      DATA 
+      ATTRIBUTE "DIMENSION_LIST" {
+         DATATYPE  H5T_VLEN { H5T_REFERENCE { H5T_STD_REF_OBJECT }}
+         DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+         DATA {
+         (0): (DATASET 3992 "/lat"), (DATASET 7803 "/nv")
+         }
+      }
+   }
+   DATASET "lon" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1440 ) / ( 1440 ) }
+      DATA 
+      ATTRIBUTE "CLASS" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 16;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "DIMENSION_SCALE"
+         }
+      }
+      ATTRIBUTE "NAME" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 4;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "lon"
+         }
+      }
+      ATTRIBUTE "REFERENCE_LIST" {
+         DATATYPE  H5T_COMPOUND {
+            H5T_REFERENCE { H5T_STD_REF_OBJECT } "dataset";
+            H5T_STD_I32LE "dimension";
+         }
+         DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+         DATA {
+         (0): {
+               DATASET 8127 "/lon_bnds",
+               0
+            },
+         (1): {
+               DATASET 8663 "/precipitation",
+               1
+            }
+         }
+      }
+      ATTRIBUTE "_Netcdf4Dimid" {
+         DATATYPE  H5T_STD_I32LE
+         DATASPACE  SCALAR
+         DATA {
+         (0): 2
+         }
+      }
+      ATTRIBUTE "bounds" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 8;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "lon_bnds"
+         }
+      }
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 9;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "longitude"
+         }
+      }
+      ATTRIBUTE "standard_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 9;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "longitude"
+         }
+      }
+      ATTRIBUTE "units" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 12;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "degrees_east"
+         }
+      }
+      ATTRIBUTE "valid_max" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): 360
+         }
+      }
+      ATTRIBUTE "valid_min" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): 0
+         }
+      }
+   }
+   DATASET "lon_bnds" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1440, 2 ) / ( 1440, 2 ) }
+      DATA 
+      ATTRIBUTE "DIMENSION_LIST" {
+         DATATYPE  H5T_VLEN { H5T_REFERENCE { H5T_STD_REF_OBJECT }}
+         DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+         DATA {
+         (0): (DATASET 5897 "/lon"), (DATASET 7803 "/nv")
+         }
+      }
+   }
+   DATASET "nv" {
+      DATATYPE  H5T_IEEE_F32BE
+      DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+      DATA {
+      (0): 0, 0
+      }
+      ATTRIBUTE "CLASS" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 16;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "DIMENSION_SCALE"
+         }
+      }
+      ATTRIBUTE "NAME" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 64;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "This is a netCDF dimension but not a netCDF variable.         2"
+         }
+      }
+      ATTRIBUTE "REFERENCE_LIST" {
+         DATATYPE  H5T_COMPOUND {
+            H5T_REFERENCE { H5T_STD_REF_OBJECT } "dataset";
+            H5T_STD_I32LE "dimension";
+         }
+         DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+         DATA {
+         (0): {
+               DATASET 8127 "/lon_bnds",
+               1
+            },
+         (1): {
+               DATASET 8395 "/lat_bnds",
+               1
+            }
+         }
+      }
+      ATTRIBUTE "_Netcdf4Dimid" {
+         DATATYPE  H5T_STD_I32LE
+         DATASPACE  SCALAR
+         DATA {
+         (0): 3
+         }
+      }
+   }
+   DATASET "precipitation" {
+      DATATYPE  H5T_IEEE_F32LE
+      DATASPACE  SIMPLE { ( 1, 1440, 480 ) / ( 1, 1440, 480 ) }
+      DATA 
+      ATTRIBUTE "DIMENSION_LIST" {
+         DATATYPE  H5T_VLEN { H5T_REFERENCE { H5T_STD_REF_OBJECT }}
+         DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+         DATA {
+         (0): (DATASET 3581 "/time"), (DATASET 5897 "/lon"),
+         (2): (DATASET 3992 "/lat")
+         }
+      }
+      ATTRIBUTE "_FillValue" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): -1
+         }
+      }
+      ATTRIBUTE "cell_method" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 3;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "sum"
+         }
+      }
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 60;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "NOAA Climate Data Record of PERSIANN-CDR daily precipitation"
+         }
+      }
+      ATTRIBUTE "missing_value" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): -9999
+         }
+      }
+      ATTRIBUTE "standard_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 20;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "precipitation_amount"
+         }
+      }
+      ATTRIBUTE "units" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 2;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "mm"
+         }
+      }
+      ATTRIBUTE "valid_max" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): 999999
+         }
+      }
+      ATTRIBUTE "valid_min" {
+         DATATYPE  H5T_IEEE_F32LE
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): 0
+         }
+      }
+   }
+   DATASET "time" {
+      DATATYPE  H5T_STD_I32LE
+      DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+      DATA {
+      (0): 16160
+      }
+      ATTRIBUTE "CLASS" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 16;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "DIMENSION_SCALE"
+         }
+      }
+      ATTRIBUTE "NAME" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 5;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "time"
+         }
+      }
+      ATTRIBUTE "REFERENCE_LIST" {
+         DATATYPE  H5T_COMPOUND {
+            H5T_REFERENCE { H5T_STD_REF_OBJECT } "dataset";
+            H5T_STD_I32LE "dimension";
+         }
+         DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+         DATA {
+         (0): {
+               DATASET 8663 "/precipitation",
+               0
+            }
+         }
+      }
+      ATTRIBUTE "_Netcdf4Dimid" {
+         DATATYPE  H5T_STD_I32LE
+         DATASPACE  SCALAR
+         DATA {
+         (0): 0
+         }
+      }
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 4;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "time"
+         }
+      }
+      ATTRIBUTE "standard_name" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 4;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "time"
+         }
+      }
+      ATTRIBUTE "units" {
+         DATATYPE  H5T_STRING {
+            STRSIZE 27;
+            STRPAD H5T_STR_NULLTERM;
+            CSET H5T_CSET_ASCII;
+            CTYPE H5T_C_S1;
+         }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "days since 1979-01-01 0:0:0"
+         }
+      }
+   }
+}
+}
