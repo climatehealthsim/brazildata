@@ -78,6 +78,7 @@ dependencies = [
  "kstring",
  "lazy_static",
  "nav-types",
+ "ndarray",
  "num",
  "regex",
  "serde",

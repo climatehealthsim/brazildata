@@ -23,6 +23,7 @@ nav-types = "0.5.1"
 regex = "1.7.0"
 lazy_static = "1.4.0"
 hdf5 = "0.8"
+ndarray = "0.15"
 
 [dev-dependencies]
 clap = { version = "^3.2.1", features = ["derive"] }
