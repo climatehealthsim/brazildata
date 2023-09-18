@@ -26,6 +26,7 @@ hdf5 = "0.8"
 ndarray = "0.15"
 osmpbfreader = "0.15.2"
 smartstring = "0.2.10"
+lexopt = "0.3.0"
 
 [dev-dependencies]
 clap = { version = "^3.2.1", features = ["derive"] }
