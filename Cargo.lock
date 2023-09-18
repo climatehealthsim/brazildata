@@ -89,6 +89,7 @@ dependencies = [
  "osmpbfreader",
  "regex",
  "serde",
+ "smartstring",
  "thiserror",
  "utf-8",
 ]
