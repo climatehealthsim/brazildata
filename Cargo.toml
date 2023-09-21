@@ -24,7 +24,7 @@ regex = "1.7.0"
 lazy_static = "1.4.0"
 hdf5 = "0.8"
 ndarray = "0.15"
-osmpbfreader = "0.15.2"
+osmpbfreader = "0.16"
 smartstring = "1.0"
 lexopt = "0.3.0"
 
