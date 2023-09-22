@@ -4,6 +4,7 @@ use anyhow::{Result, anyhow};
 use std::{fs::File, ffi::OsString};
 // use std::io::BufReader;
 use smartstring::{SmartString, SmartStringMode};
+use osm_boundaries_utils;
 
 struct Opt {
     path: OsString,
@@ -63,26 +64,46 @@ fn main() -> Result<()> {
     let mut selectedcount = 0;
     let countdown_from = 1000000;
     let mut countdown = countdown_from;
-    let items = pbf.get_objs_and_deps(|n| {
-        totalcount += 1;
-        countdown -= 1;
-        if countdown == 0 {
-            countdown = countdown_from;
-            println!("processed {totalcount} items (selected {selectedcount})");
-        }
-        if n.is_way() && n.tags().len() >= 2 && has_proper_tags(&n) {
-            selectedcount += 1;
-            // true
-            print_node(&n);
-            false
-        } else {
-            false
-        }
-    })?;
-    println!("=> processed {totalcount} items (selected {selectedcount})");
-    for item in items {
-        if has_proper_tags(&item.1) {
-            print_node(&item.1);
+    if true {
+        pbf.par_iter().filter(
+            |x| match x {
+                Ok(x) => x.is_node(),
+                Err(_) => true
+            }).for_each(
+            |x| {
+                match x {
+                    Ok(x) => {
+                        if has_proper_tags(&x) {
+                            print_node(&x);
+                        }
+                    },
+                    Err(e) => {
+                        println!("Err: {e}");
+                    }
+                }
+            });
+    } else {
+        let items = pbf.get_objs_and_deps(|n| {
+            totalcount += 1;
+            countdown -= 1;
+            if countdown == 0 {
+                countdown = countdown_from;
+                println!("processed {totalcount} items (selected {selectedcount})");
+            }
+            if n.is_way() && n.tags().len() >= 2 && has_proper_tags(&n) {
+                selectedcount += 1;
+                // true
+                print_node(&n);
+                false
+            } else {
+                false
+            }
+        })?;
+        println!("=> processed {totalcount} items (selected {selectedcount})");
+        for item in items {
+            if has_proper_tags(&item.1) {
+                print_node(&item.1);
+            }
         }
     }
     Ok(())
