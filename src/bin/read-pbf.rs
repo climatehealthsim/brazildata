@@ -67,21 +67,21 @@ fn main() -> Result<()> {
     if true {
         pbf.par_iter().filter(
             |x| match x {
-                Ok(x) => x.is_node(),
-                Err(_) => true
-            }).for_each(
-            |x| {
-                match x {
-                    Ok(x) => {
+                Ok(x) => {
+                    if x.is_node() {
                         if has_proper_tags(&x) {
                             print_node(&x);
                         }
-                    },
-                    Err(e) => {
-                        println!("Err: {e}");
+                        false
+                    } else {
+                        false
                     }
                 }
-            });
+                Err(e) => {
+                    println!("Err: {e}");
+                    false
+                }
+            }).count();
     } else {
         let items = pbf.get_objs_and_deps(|n| {
             totalcount += 1;
